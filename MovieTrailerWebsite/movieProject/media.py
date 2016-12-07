@@ -6,14 +6,16 @@ class Movie(object):
 	url = ''
 	story = ''
 	reviews = []
+	poster = ''
 
-	def __init__(self, title, youtubeUrl, storyLine, reviews):
+	def __init__(self, movie_title, movie_url, movie_storyLine, movie_reviews, movie_posterUrl):
 
-		self.title = title
-		self.url = youtubeUrl
-		self.story = storyLine
+		self.title = movie_title
+		self.url = movie_url
+		self.story = movie_storyLine
+		self.poster = movie_posterUrl
 
-		for review in reviews:
+		for review in movie_reviews:
 			self.reviews.append(review)
 
 	def showTitle(self):
@@ -24,8 +26,12 @@ class Movie(object):
 
 	def showReviews(self):
 		return self.reviews
+
+	def showPoster(self):
+		webbrowser.open(self.poster)	
+		return self.poster
 		
 	def showTrailer(self):
 		webbrowser.open(self.url)
-		return self.url					
+		return self.url							
 
