@@ -18,5 +18,14 @@ avatar = media.Movie(
 		"http://www.imdb.com/title/tt0499549/mediaviewer/rm843615744"
 	)
 
-print (toystory.story)
-print (avatar.story)
+bajiraoMastani = media.Movie(
+
+		"Bajirao Mastani",
+		"https://www.youtube.com/watch?v=eHOc-4D7MjY",
+		"An account of the romance between the Maratha general, Baji Rao I and Mastani, a Muslim princess.",
+		['A fantastic and classic epic romance', 'Well-Made, Well-Acted Motion-Picture!', 'surreal direction, exemplary CGI and commendable performances'],
+		"http://www.imdb.com/title/tt3735246/mediaviewer/rm1687478528"
+	)
+
+print (bajiraoMastani.showTrailer())
+
