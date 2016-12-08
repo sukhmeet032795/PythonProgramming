@@ -3,17 +3,17 @@ import webbrowser
 class Movie(object):
 
 	title = ''
-	url = ''
+	trailer_youtube_url = ''
 	story = ''
 	reviews = []
-	poster = ''
+	poster_image_url = ''
 
 	def __init__(self, movie_title, movie_url, movie_storyLine, movie_reviews, movie_posterUrl):
 
 		self.title = movie_title
-		self.url = movie_url
+		self.trailer_youtube_url = movie_url
 		self.story = movie_storyLine
-		self.poster = movie_posterUrl
+		self.poster_image_url = movie_posterUrl
 
 		for review in movie_reviews:
 			self.reviews.append(review)
@@ -33,5 +33,5 @@ class Movie(object):
 		
 	def showTrailer(self):
 		webbrowser.open(self.url)
-		return self.url							
+		return self.url					
 
