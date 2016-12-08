@@ -41,23 +41,23 @@ queen = media.Movie(
 		"8.4"
 	)
 
-jabWeMet = media.Movie(
+ironMan = media.Movie(
 
-		"Jab We Met",
-		"https://www.youtube.com/watch?v=T_Fy0qlgfo4",
-		"A depressed wealthy businessman finds his life changing after he meets a spunky and care-free young woman.",
-		["Lovely, simple and full of life", "Excellent Movie, Great Plot", "Totally Entertaining", "A Funny Little Film"],
-		"https://images-na.ssl-images-amazon.com/images/M/MV5BMjExODIzNjU3N15BMl5BanBnXkFtZTcwNjk4NTk5Mw@@._V1_QL50_.jpg",
+		"Iron Man",
+		"https://www.youtube.com/watch?v=8hYlB38asDY",
+		"After being held captive in an Afghan cave, billionaire engineer Tony Stark creates a unique weaponized suit of armor to fight evil.",
+		["Delivers Intelligence & Great Acting with its Fun", "Excellent Movie, Great Plot", "Totally Entertaining", "Wow, very impressive !!!!"],
+		"https://images-na.ssl-images-amazon.com/images/M/MV5BMTczNTI2ODUwOF5BMl5BanBnXkFtZTcwMTU0NTIzMw@@._V1_QL50_SY1000_CR0,0,674,1000_AL_.jpg",
 		"8"
 	)
 
-munnaBhai = media.Movie(
+piratesOfCaribbean = media.Movie(
 
-		"Munna Bhai M.B.B.S.",
-		"https://www.youtube.com/watch?v=6lCGvu-hwX4",
-		"A gangster sets out to fulfill his father's dream of becoming a doctor.",
-		["Excellent Tapori Movie", "Laughter Guaranteed!!", "Real nice comedy", "A Laugh Riot!"],
-		"https://images-na.ssl-images-amazon.com/images/M/MV5BMTQ4NzQ3NjAxMV5BMl5BanBnXkFtZTcwNDg2ODgzMQ@@._V1_QL50_.jpg",
+		"Pirates of the Caribbean",
+		"https://www.youtube.com/watch?v=naQr0uTrH_s",
+		"Blacksmith Will Turner teams up with eccentric pirate Captain Jack Sparrow to save his love, the governor's daughter, from Jack's former pirate allies, who are now undead.",
+		["Terrific!", "Laughter Guaranteed!!", "Real Swashbuckling film to make you laugh", "Most Delightful Pirates Adventure"],
+		"https://images-na.ssl-images-amazon.com/images/M/MV5BMjAyNDM4MTc2N15BMl5BanBnXkFtZTYwNDk0Mjc3._V1_QL50_.jpg",
 		"8.3"
 	)
 
@@ -122,6 +122,6 @@ inception = media.Movie(
 	)
 
 
-movies = [bajiraoMastani, pink, zindagiNaMilegiDubara, queen, toystory, avatar, ironman3, hobbit, wolfofwallstreet, inception , jabWeMet, munnaBhai]
+movies = [ironman3, hobbit, wolfofwallstreet, bajiraoMastani, pink, queen, zindagiNaMilegiDubara, toystory, avatar, inception , ironMan, piratesOfCaribbean]
 
 imdb.open_movies_page(movies)
