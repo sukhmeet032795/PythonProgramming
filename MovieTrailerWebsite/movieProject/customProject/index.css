@@ -34,13 +34,19 @@ header span{
 
 .card{
 
-	width: 40%;
-    margin: 2% 5%;
+	width: 30%;
+    margin: 2% 1.63%;
+}
+
+.card:hover{
+
+	box-shadow: 0px 10px 26px 5px #2962FF;
+    transition: box-shadow .3s ease-out;            
 }
 
 .card-image img{
 
-	height: 600px;
+	height: 380px;
 }
 
 .icon{
@@ -77,4 +83,9 @@ header span{
 .modal{
 
 	max-height: 79% !important;
+}
+
+.modal-content{
+
+	padding: 0px !important;
 }

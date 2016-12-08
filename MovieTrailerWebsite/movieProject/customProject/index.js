@@ -5,22 +5,24 @@ $(function(){
 		e.preventDefault();
 		var current = $(this);
 		var url = $(current).attr("id");
-		var title = $(current).attr("name");
-
-		$('.modal-content iframe').attr("src" , url);
-		$('.modal-content p').text(title);
 
 		$('#trailerModal').modal('open');
+		var element = '<iframe src="'+url+'" width="100%" height="395" frameborder="0" allowfullscreen></iframe>'
+		$('.modal-content').append(element);
 	});
 
 	$('.modal').modal({
 
-		dismissible: false, 
+		dismissible: true, 
 		opacity: .5, 
 		in_duration: 300, 
 		out_duration: 300, 
 		starting_top: '4%', 
-		ending_top: '10%'
+		ending_top: '10%',
+		complete: function() { 
+
+			$('.modal-content').empty();
+		}
 	});
 
 	$('.modal-close').click(function(e){
