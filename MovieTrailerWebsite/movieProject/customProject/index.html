@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<title>MoviesWorld</title>
+	
+	<!-- Css Files -->
+
+	<!-- MaterializeCss -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+	<!-- Custom Css File -->
+	<link rel="stylesheet" href="index.css">
+	<!-- Google Icons -->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<!-- Google Fonts -->
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Bree Serif">
+
+	<!-- Scripts -->
+
+	<!-- Jquery -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<!-- MaterializeCss -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+	<!-- FontAwesome -->
+	<script src="https://use.fontawesome.com/329b68c3d5.js"></script>
+	<!-- Custom JS File -->
+	<script src="index.js"></script>
+
+</head>
+<body>
+
+	<header>
+		<i class="small material-icons">movie</i>
+		<span>MoviesWorld</span>
+	</header>
+
+	<div class="moviesContainer">
+		
+		<div class="card">
+			<div class="card-image waves-effect waves-block waves-light">
+				<img class="activator" src="https://images-na.ssl-images-amazon.com/images/M/MV5BZGFmMjM5OWMtZTRiNC00ODhlLThlYTItYTcyZDMyYmMyYjFjXkEyXkFqcGdeQXVyNDUzOTQ5MjY@._V1_QL50_SY1000_CR0,0,692,1000_AL_.jpg">
+			</div>
+			<div class="card-content">
+				<div class="card-title activator grey-text text-darken-4 movieTitle">
+					<p>Zindagi Na Milegi Dobara</p>
+					<i class="material-icons right">more_vert</i>
+				</div>
+				<div class="trailerClass">
+					<a href = "javascript:void(0);" id = "https://www.youtube.com/embed/ifIBOKCfjVs?autoplay=1" name = "Zindagi Na Milegi Dubara">Trailer</a>
+					<i class="material-icons icon">video_library</i>
+				</div>
+			</div>
+			<div class="card-reveal">
+				<span class="card-title grey-text text-darken-4">Movie Story Line<i class="material-icons right">close</i></span>
+				<p>Three friends decide to turn their fantasy vacation into reality after one of their number becomes engaged.</p>
+				
+				<div class="reviewHeader">
+					<span class="card-title grey-text text-darken-4 reviewSpan">Movie Reviews</span>
+					<i class="material-icons icon">movie_filter</i>
+				</div>
+
+				<div class="reviews">
+
+					<p>
+						<input type="checkbox" id="review1" checked="checked" disabled="disabled" />
+						<label for="review1">Perfect summer movie about the journey of Life</label>
+					</p>
+
+					<p>
+						<input type="checkbox" id="review2" checked="checked" disabled="disabled" />
+						<label for="review2">Mental Buoys Rockzzzz..</label>
+					</p>
+
+					<p>
+						<input type="checkbox" id="review3" checked="checked" disabled="disabled" />
+						<label for="review3">Mind Blowing Stuff</label>
+					</p>				
+
+					<p>
+						<input type="checkbox" id="review4" checked="checked" disabled="disabled" />
+						<label for="review4">Excellent Movie</label>
+					</p>	
+				</div>
+
+				<div class="ratingHeader">
+					<span class="card-title grey-text text-darken-4 ratingSpan">Movie Rating</span>
+					<i class="material-icons icon">star_rate</i>
+				</div>
+
+				<div class="rating">4.3 out of 5</div>
+			</div>
+		</div>
+	</div>
+
+	<div id = "trailerModal" class="modal">
+		<div class="modal-content">
+			<h4>Movie Trailer</h4>
+			<p></p>
+			<iframe src="" width="668" height="315" frameborder="0" allowfullscreen></iframe>
+		</div>
+		<div class="modal-footer">
+			<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+		</div>
+	</div>
+</body>
+</html>

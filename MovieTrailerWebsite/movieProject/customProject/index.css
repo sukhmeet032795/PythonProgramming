@@ -1,0 +1,80 @@
+header{
+
+	background-color: #4285f4;
+	padding: 12px;
+	display: flex;
+}
+
+header i{
+
+	color: white;
+	margin-top: 3px;
+    margin-right: 9px;
+}
+
+header span{
+
+	color: #fff;
+    font-size: 23px;
+    font-family: "Bree Serif", sans-serif;
+    margin: auto 0px;
+}
+
+.moviesContainer{
+
+	margin-top: 2%;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.movieTitle i{
+
+	margin-top: -35px;
+}
+
+.card{
+
+	width: 40%;
+    margin: 2% 5%;
+}
+
+.card-image img{
+
+	height: 600px;
+}
+
+.icon{
+
+	margin-left: 9px;
+}
+
+.reviewHeader, .ratingHeader{
+
+	margin-top: 10%;
+	display: flex;
+}
+
+.reviewHeader i, .ratingHeader i{
+
+	margin-top: 6px;
+}
+
+.reviewSpan{
+
+	
+}
+
+.trailerClass a{
+
+	font-size: 19px;
+}
+
+.trailerClass{
+
+	display: flex;
+}
+
+.modal{
+
+	max-height: 79% !important;
+}
