@@ -2,6 +2,9 @@ import webbrowser
 
 class Movie(object):
 
+	'''Class which helps me to create various movie objects and check their corresponding parameters like youtube url, 
+		poster url, reviews etc..'''
+
 	def __init__(self, movie_title, movie_url, movie_storyLine, movie_reviews, movie_posterUrl, movie_rating):
 
 		self.title = movie_title
@@ -27,10 +30,10 @@ class Movie(object):
 		return self.reviews
 
 	def showPoster(self):
-		webbrowser.open(self.poster)	
-		return self.poster
+		webbrowser.open(self.poster_image_url)	
+		return self.poster_image_url
 		
 	def showTrailer(self):
-		webbrowser.open(self.url)
-		return self.url					
+		webbrowser.open(self.trailer_youtube_url)
+		return self.trailer_youtube_url					
 
