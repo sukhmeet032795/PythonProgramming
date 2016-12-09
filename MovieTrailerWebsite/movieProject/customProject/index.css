@@ -89,3 +89,8 @@ header span{
 
 	padding: 0px !important;
 }
+
+input[type=checkbox] + label{
+
+	color: #616161 !important;
+}
