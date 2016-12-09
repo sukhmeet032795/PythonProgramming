@@ -1,6 +1,6 @@
 header{
 
-	background-color: #4285f4;
+	background-color: #242424;
 	padding: 12px;
 	display: flex;
 }
@@ -40,7 +40,7 @@ header span{
 
 .card:hover{
 
-	box-shadow: 0px 10px 26px 5px #2962FF;
+	box-shadow: 0px 10px 30px #242424;
     transition: box-shadow .3s ease-out;            
 }
 
