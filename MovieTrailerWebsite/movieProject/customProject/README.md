@@ -20,7 +20,7 @@ b) Nagivate to the folder containing all of the files.
 
 c) Type the following command:
 
-python entertainment_center.py    // Python 2.7
+python entertainment_center.py    // Python 2.7  <br>
 python3 entertainment_center.py   // Python 3.4
 
 NOTE : This command is as per my local machine, you can modify it accordingly where you may just use 'python' keyword even for Python 3.4
