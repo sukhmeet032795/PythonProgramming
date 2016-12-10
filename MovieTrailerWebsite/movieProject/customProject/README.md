@@ -23,6 +23,8 @@ c) Type the following command:
 python entertainment_center.py    // Python 2.7  <br>
 python3 entertainment_center.py   // Python 3.4
 
+d) The code will automatically create the html file and will open the html file in your default browser. Enjoy :)
+
 NOTE : This command is as per my local machine, you can modify it accordingly where you may just use 'python' keyword even for Python 3.4
 
 
