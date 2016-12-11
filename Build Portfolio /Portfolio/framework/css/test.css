@@ -1,0 +1,167 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:light');
+
+*{
+
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    font-family: 'Lato', sans-serif;
+}
+
+.row{
+
+    width: 100%;
+}
+
+.col-1{
+
+    width: 8.333%;
+}
+
+.col-2{
+
+    width: 16.667%;
+}
+
+.col-3{
+
+    width: 25%;
+}
+
+.col-4{
+
+    width: 33.333%;
+}
+
+.col-5{
+
+    width: 41.667%;
+}
+
+.col-6{
+
+    width: 50%;
+}
+
+.col-7{
+
+    width: 58.333%;
+}
+
+.col-8{
+
+    width: 66.667%;
+}
+
+.col-9{
+
+    width: 75%;
+}
+
+.col-10{
+
+    width: 83.333%;
+}
+
+.col-11{
+
+    width: 91.667%;
+}
+
+.col-12{
+
+    width: 100%;
+}
+
+
+/********Custom CSS********/
+
+.container{
+
+    width: 72%;
+    margin: auto;
+}
+
+header{
+
+    display: flex;
+    border-bottom: 4px solid #BCBBBB;
+    margin-bottom: 24px;
+}
+
+.header-logo{
+
+    margin-bottom: 6px;
+}
+
+.header-content{
+
+    display: flex;
+    flex-direction: column;
+    margin: 6px 0px;
+}
+
+.header-content span{
+
+    text-align: right;
+}
+
+.name{
+
+    font-size: 52px;
+    font-weight: 100;
+    font-style: normal;
+    color: #BCBBBB;
+    margin-top: 10px;
+}
+
+.profile{
+
+    color: #BCBBBB;
+    font-size: 18px;
+    font-weight: 900;
+    font-style: normal;
+    margin-top: 4px;
+}
+
+.featuredWorks span{
+
+    color: #BCBBBB;
+    font-size: 28px;
+    font-weight: bolder;
+}
+
+.profilePicture{
+
+    margin-bottom: 34px;
+}
+
+.applications{
+
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.application{
+
+    width: 31%;
+}
+
+.application h3{
+
+    text-align: center;
+    color: #747704;
+    font-size: 36px;
+    margin: 8px;
+}
+
+.application a{
+
+    color: #747704;
+    text-decoration: none;
+    text-align: center;
+    display: inherit;
+}
+

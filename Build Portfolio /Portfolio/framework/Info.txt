@@ -17,3 +17,15 @@ https://validator.w3.org/#validate_by_input
 5) CSS Normalization
 
 https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.css
+
+6) Google Fonts
+
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Tangerine">
+<style>
+    body {
+        font-family: 'Tangerine', serif;
+        font-size: 48px;
+    }
+</style>
+
+7)
