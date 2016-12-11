@@ -1,0 +1,31 @@
+1) Sample Images:
+
+https://placekitten.com/
+
+2) Negative Space:
+
+Empty space between elements is negative space
+
+3) CSS Validator
+
+http://jigsaw.w3.org/css-validator/#validate_by_input
+
+4) HTML Validator
+
+https://validator.w3.org/#validate_by_input
+
+5) CSS Normalization
+
+https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.css
+
+6) Google Fonts
+
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Tangerine">
+<style>
+    body {
+        font-family: 'Tangerine', serif;
+        font-size: 48px;
+    }
+</style>
+
+7)http://udacity.github.io/frontend-nanodegree-styleguide/

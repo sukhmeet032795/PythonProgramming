@@ -28,4 +28,4 @@ https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.css
     }
 </style>
 
-7)
+7)http://udacity.github.io/frontend-nanodegree-styleguide/

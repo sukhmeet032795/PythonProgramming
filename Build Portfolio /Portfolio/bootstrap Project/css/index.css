@@ -1,0 +1,49 @@
+body{
+
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    color: #BCBBBB;
+    margin-bottom: 10px;
+}
+
+.title-thin{
+
+    font-weight: 100;
+}
+
+.title-mild{
+
+    color: #747704;
+}
+
+.title-image{
+
+    margin-top: 20px;
+}
+
+.title-size{
+
+    font-size : 60px;
+}
+
+.hr-padding{
+
+    padding: 0px;
+}
+
+.hr-style{
+
+    border-top: 4px solid #BCBBBB;
+}
+
+.application-title{
+
+    font-size: 40px;
+}
+
+.application-link{
+
+    font-size: 20px;
+    color: #BCBBBB;
+    text-decoration: none;
+}
