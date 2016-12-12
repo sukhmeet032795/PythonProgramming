@@ -64,4 +64,10 @@ img, embed, video, object{
     max-width: 100%;
 }
 
-minimum size of element being touched : 48*48 px (finger size is 40*40)
+minimum size of element being touched : 48*48 px (finger size is 40*40) i.e.
+
+nav a, button{
+
+    min-height : 48px;
+    min-width : 48px;
+}
