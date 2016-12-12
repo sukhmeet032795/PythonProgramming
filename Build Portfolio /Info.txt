@@ -29,3 +29,39 @@ https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.css
 </style>
 
 7)http://udacity.github.io/frontend-nanodegree-styleguide/
+
+8) Relation betwwen Hardware and Device Independent Pixels(DIP)
+
+No of hardware pixels corresponding to 1 dip
+
+DIP is calculated in 1D
+
+DIP and CSS Pixels
+
+In the Starting Small lesson at 0:40 in the video "Setting the Viewport" Pete says that "initial-scale=1" specifies a 1:1 relationship between Device Independent Pixels and CSS Pixels. What are the differences between Device Independent Pixels and CSS Pixels?
+Alright, I'll explain as far as I understand. Let's start with what a pixel is. Think of a computer screen as a grid of tiny lights. A pixel is 1 of these little lights. So when you say something is 100px wide, it's 100 of those dots wide.
+
+Nowadays, a pixel isn't always a pixel. Some devices have higher amounts of pixels to the point where, if you stick to the strict pixel-is-a-pixel idea, things would end up reeeeeeally tiny. But having more pixels allows for finer details, which can look really nice. How can this work both ways?
+
+They made a way to make the devices able to tell how make something be "regular size," and that's essentially what we're doing with initial-scale=1. What is considered 1px in CSS normally is replicated. So in a device that is 2x the pixel density, it would be a 2-by-2 box.
+
+So, Device Independent Pixels is the "true pixels" of a device while CSS Pixels is what CSS considers a "normal pixel" or "standard pixel".
+
+shadab_2005:
+Also, what changes when we add the meta tag with "width=device-width"? What is it that the tag is doing in terms of the relationship between CSS Pixels and Device Pixels?
+With width=device-width, we're saying that the width of the page fits the device's width. In this way, the page will fit whatever the width of the device is--even if the device is rotated. So if the device is 350px wide, the page will be set to be 350px wide.
+
+Here's some reads. Definitely check out the first one.
+
+"What is initial scale, user-scalable, minimum-scale, maximum-scale attribute in meta tag?"3 on Stack Overflow
+"Using the viewport meta tag to control layout on mobile browsers"2 on MDN
+"Meta viewport and width=device-width vs. percent dimentions"1 on Stack Overflow
+
+9) Suggestion : set this css always:
+
+img, embed, video, object{
+
+    max-width: 100%;
+}
+
+minimum size of element being touched : 48*48 px (finger size is 40*40)
