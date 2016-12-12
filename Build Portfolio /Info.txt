@@ -71,3 +71,10 @@ nav a, button{
     min-height : 48px;
     min-width : 48px;
 }
+
+10) https://developers.google.com/web/fundamentals/design-and-ui/responsive/patterns
+
+-> Fluid Pattern
+-> Column Pattern
+-> Layout Pattern
+-> Off-Canvas Pattern

@@ -1,0 +1,267 @@
+/*General CSS*/
+
+.nameHolder{
+
+    margin-left: 18.8%;
+}
+
+.container1, .container2, .container3, .container4{
+
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.box {
+    width: 100%;
+    min-height: 150px;
+}
+
+.dark_blue {
+    background-color: #2A457A;
+    color: #efefef;
+}
+
+.light_blue {
+    background-color: #099DD9;
+}
+
+.green {
+    background-color: #0C8542;
+}
+
+.red {
+    background-color: #EC1D3B;
+}
+
+.orange {
+    background-color: #F79420;
+}
+
+/*Floating Patterns*/
+
+@media only screen and (min-width: 450px){
+
+    .container1 .light_blue{
+
+        width: 50%
+    }
+
+    .container1 .green{
+
+        width: 50%;
+    }
+}
+
+@media only screen and (min-width: 550px){
+
+    .container1 .red{
+
+        width: 33.333%;
+    }
+
+    .container1 .orange{
+
+        width: 66.667%;
+    }
+}
+
+@media only screen and (min-width: 800px){
+
+    .container1{
+
+        width: 800px;
+        margin: auto;
+    }
+}
+
+/*Column Patterns*/
+
+@media only screen and (min-width: 450px){
+
+    .container2 .dark_blue{
+
+        width: 50%
+    }
+
+    .container2 .light_blue{
+
+        width: 50%;
+    }
+}
+
+@media only screen and (min-width: 600px){
+
+    .container2 .dark_blue{
+
+        width: 33.333%
+    }
+
+    .container2 .light_blue{
+
+        width: 33.333%;
+    }
+
+    .container2 .green{
+
+        width: 33.333%;
+    }
+}
+
+@media only screen and (min-width: 800px){
+
+    .container2 .dark_blue{
+
+        width: 25.00%
+    }
+
+    .container2 .light_blue{
+
+        width: 25.00%;
+    }
+
+    .container2 .green{
+
+        width: 25.00%;
+    }
+
+    .container2 .red{
+
+        width: 25.00%;
+    }
+}
+
+@media only screen and (min-width: 1000px){
+
+    .container2 .dark_blue{
+
+        width: 20.00%
+    }
+
+    .container2 .light_blue{
+
+        width: 20.00%;
+    }
+
+    .container2 .green{
+
+        width: 20.00%;
+    }
+
+    .container2 .red{
+
+        width: 20.00%;
+    }
+
+    .container2 .orange{
+
+        width: 20.00%;
+    }
+}
+
+@media only screen and (min-width: 1100px){
+
+    .container2{
+
+        width: 1100px;
+        margin: auto;
+    }
+}
+
+/*Layout Patterns*/
+
+.boxContainer{
+
+    width: 100%;
+}
+
+@media only screen and (min-width: 600px){
+
+    .container3 .dark_blue{
+
+        width: 25%;
+    }
+
+    .container3 .boxContainer{
+
+        width: 75%;
+    }
+}
+
+@media only screen and (min-width: 800px){
+
+    .container3 .dark_blue{
+
+        width: 25%;
+    }
+
+    .container3 .boxContainer{
+
+        width: 50%;
+    }
+
+    .container3 .red{
+
+        width: 25%;
+    }
+}
+
+@media only screen and (min-width: 1000px){
+
+    .container3{
+
+        width: 1000px;
+        margin: auto;
+    }
+}
+
+/*Off Canvas Pattern*/
+
+.container4 .light_blue{
+
+    width: 100%;
+    height: 600px;
+}
+
+.container4 .dark_blue{
+
+    height: 600px;
+    width: 300px;
+    position: absolute;
+    transform: translate(-533px, 0px);
+    transition: transform 0.3s ease-in;
+}
+
+.fa-icon{
+
+    position: absolute;
+    font-size: 40px !important;
+    margin: 1%;
+    transform: translate(0px, 0px);
+    transition: transform 0s ease-in-out;
+}
+
+.slideRight{
+
+    transform: translate(328px);
+}
+
+@media only screen and (min-width: 800px){
+
+    .fa-icon{
+
+        display: none;
+    }
+
+    .container4 .dark_blue{
+
+        transform: translate(0px);
+        transition: transform 0.0s ease-in;
+        position: relative;
+    }
+
+    .container4 .light_blue{
+
+        width: auto;
+        flex-grow: 1;
+    }
+}
