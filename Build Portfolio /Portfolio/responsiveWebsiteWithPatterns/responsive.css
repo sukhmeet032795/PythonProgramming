@@ -87,21 +87,121 @@
     }
 }
 
-@media only screen and (max-width: 700px){
+@media only screen and (min-width: 551px) and (max-width: 700px){
 
     .header__title{
 
-        font-size: 3.2em;
-        margin-top: 25px;
+        font-size: 3em;
+        margin-top: 27px;
     }
 }
 
-@media only screen and (min-width: 700px){
+@media only screen and (min-width: 700px) and (max-width: 900px){
 
     .header__title{
 
         font-size: 3.4em;
         margin-top: 25px;
+    }
+
+    .hero{
+
+        width: 59%;
+        padding: 0px;
+        order: -1;
+        margin-right: 1%;
+    }
+
+    .weather{
+
+        margin-top: 0%;
+        width: 40%;
+        padding: 0px;
+        order: 1;
+    }
+
+    .top-news{
+
+        order: 2;
+    }
+
+    .scores{
+
+        order: 3;
+    }
+
+    .recent-news{
+
+        order: 4;
+    }
+}
+
+@media only screen and (min-width: 901px){
+
+    .header__title{
+
+        font-size: 3.6em;
+        margin-top: 25px;
+    }
+
+    .hero{
+
+        width: 59%;
+        order: -1;
+        margin-right: 1%;
+    }
+
+    .top-news{
+
+        margin-top: 0%;
+        width: 40%;
+        order: 1;
+        height: inherit;
+    }
+
+    .scores{
+
+        order: 2;
+        width: 49%;
+        margin-right: 1%;
+    }
+
+    .weather{
+
+        order: 3;
+        width: 50%;
+    }
+
+    .recent-news{
+
+        order: 4;
+    }
+
+    .content{
+
+        width: 90%;
+        margin:auto;
+    }
+
+    .nav{
+
+        width: 90%;
+        margin:auto;
+    }
+}
+
+@media only screen and (min-width: 1001px){
+
+    .content{
+
+        width: 90%;
+        margin:auto;
+    }
+
+    .nav{
+
+        width: 90%;
+        margin:auto;
     }
 }
 
