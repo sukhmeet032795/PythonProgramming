@@ -1,0 +1,88 @@
+/*General CSS*/
+
+thead tr{
+
+    background-color: #333333;
+}
+
+thead th{
+
+    color: #fff;
+    line-height: 2;
+    padding: 4px 6px;
+    font-size: 15px;
+}
+
+tbody tr{
+
+    background-color: #EEEEEE;
+    color: #242424;
+}
+
+td{
+
+    width: 10%;
+}
+
+tbody tr:nth-child(even){
+
+    background-color: #FFF;
+    color: #242424;
+}
+
+@media only screen and (max-width: 800px){
+
+    /*No More Table*/
+
+    .container1 table,.container1 thead,.container1 tr,.container1 th,.container1 tbody,.container1 td{
+
+        display: block;
+    }
+
+    .container1 thead tr{
+
+        position: absolute;
+        left: -9999px;
+        top: -9999px;
+    }
+
+    .container1 tr{
+
+        margin-bottom: 20px;
+        border: 2px solid #242424;
+    }
+
+    .container1 td{
+
+        position: relative;
+        padding-left: 50%;
+        margin-bottom: 5px;
+    }
+
+    .container1 td:before{
+
+        content: attr(data-th);
+        position: absolute;
+        left: 6px;
+        font-weight: bold;
+    }
+
+    /*Contained Table*/
+
+    .container2{
+
+        overflow-x: auto;
+    }
+
+    .container2 td{
+
+        text-align: center;
+    }
+
+    /*Hide Certain Column Tables*/
+
+    .container3 td:nth-child(even), .container3 th:nth-child(even){
+
+        display: none;
+    }
+}
