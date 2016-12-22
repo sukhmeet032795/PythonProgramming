@@ -1,0 +1,9 @@
+This new set of units consists of four different units. Two for each axis, and a minimum and maximum value of the two.
+
+vw: 1/100th viewport width
+vh: 1/100th viewport height
+vmin: 1/100th of the smallest side
+vmax: 1/100th of the largest side
+
+Just to clarify: 1vmax equals 1vh in portrait mode, whilst in landscape mode, 1vmax will equal 1vw.
+
