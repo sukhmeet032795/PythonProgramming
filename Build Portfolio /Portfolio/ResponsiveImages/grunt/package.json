@@ -1,0 +1,17 @@
+{
+  "name": "example-project",
+  "version": "0.1.0",
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-responsive-images": "^1.10.1"
+  },
+  "main": "Gruntfile.js",
+  "dependencies": {
+    "grunt-responsive-images": "^1.10.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
