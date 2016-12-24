@@ -78,3 +78,20 @@ nav a, button{
 -> Column Pattern
 -> Layout Pattern
 -> Off-Canvas Pattern
+
+11) https://unicode-table.com/en/#latin-extended-b
+
+12)
+
+Icon Fonts
+
+Zocial                                         => http://zocial.smcllns.com/
+Font Awesome                                   => http://fontawesome.io/
+We Love Icon Fonts!                            => http://weloveiconfonts.com/
+Icon fonts on CSS-Tricks                       => https://css-tricks.com/examples/IconFont/
+ARIA                                           => https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA
+
+13)
+
+
+
