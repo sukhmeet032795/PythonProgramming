@@ -44,7 +44,6 @@ $(function(){
         e.preventDefault();
         $('.jspPane a span').removeClass("active");
         var child = $(this).children();
-        console.log(child);
         $(child[0]).addClass("active");
     })
 });
