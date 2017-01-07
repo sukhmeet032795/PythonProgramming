@@ -1,3 +1,14 @@
+/******General*******/
+
+a {
+    color: #545454;
+    text-decoration: none;
+    transition-duration: .2s;
+    -moz-transition-duration: .2s;
+    -webkit-transition-duration: .2s;
+    -o-transition-duration: .2s;
+}
+
 body{
 
     margin: 0px;
@@ -74,15 +85,14 @@ body{
     margin: 30px 0 0;
 }
 
+.logo img{
+
+    border-radius: 50%;
+}
+
 .logo span {
 
     display: none
-}
-
-.logo img {
-
-    width: auto;
-    height: auto;
 }
 
 .menu {
@@ -129,7 +139,7 @@ body{
 .menu nav a span.active {
 
     color: #ffb400;
-    font-weight: 400
+    font-weight: 600
 }
 
 .menu nav a:hover {

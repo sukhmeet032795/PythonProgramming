@@ -1,5 +1,7 @@
 $(function(){
 
+    //Horizontal Scrolling of Divs When Div is Clicked
+
     var index = 1, mar = 0;
     var childCount = $('.rightPanel').children().length;
     var parentWidth = parseInt($('.rightPanel').css("width"));
@@ -35,6 +37,15 @@ $(function(){
         }
     });
 
+    // Changing the active menu item on click
 
+    $('.jspPane a').click(function(e){
+
+        e.preventDefault();
+        $('.jspPane a span').removeClass("active");
+        var child = $(this).children();
+        console.log(child);
+        $(child[0]).addClass("active");
+    })
 });
 
