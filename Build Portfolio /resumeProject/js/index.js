@@ -46,5 +46,20 @@ $(function(){
         var child = $(this).children();
         $(child[0]).addClass("active");
     })
+
+
+    $('.chart').easyPieChart({
+
+        easing: 'easeOutBounce',
+        onStep: function (from, to, percent) {
+            $(this.el).find('.percent').text(Math.round(percent));
+        }
+    });
+
+    // Progress Bar For Skills Page
+
+    progressBar(90, $('#progressBar'));
+    progressBar(95, $('#progressBar2'));
+    progressBar(87, $('#progressBar3'));
 });
 
