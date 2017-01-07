@@ -1,4 +1,19 @@
+@import url('normalize.css');
+
 /******General*******/
+
+body{
+
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    color: #545454;
+    line-height: 22px;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    margin: 0px;
+}
 
 a {
     color: #545454;
@@ -9,10 +24,29 @@ a {
     -o-transition-duration: .2s;
 }
 
-body{
+h2 {
 
-    margin: 0px;
-    overflow-x: hidden;
+    font-size: 45px;
+    margin: 0;
+    line-height: 45px;
+}
+
+h1, h2, h3, h4, h5 {
+
+    font-weight: 400;
+    font-family: 'Oswald', sans-serif;
+    color: #000;
+    text-transform: uppercase;
+}
+
+.gray-bg {
+
+    background-color: #f7f7f7
+}
+
+.white-bg {
+
+    background-color: #FFFFF
 }
 
 .container{
@@ -22,62 +56,15 @@ body{
     max-width: none;
 }
 
+/******Side Nav(Left Panel)*********/
+
 .leftPanel{
 
     width: 200px;
     position: fixed;
     z-index: 1000;
-    background-color: orange;
     height: 100vh;
 }
-
-.rightPanel{
-
-    position: absolute;
-    display: -webkit-box;
-    left: 200px;
-    right: 0px;
-    transform: translateX(0%);
-    -webkit-transition: transform 500ms ease-in-out;
-    -moz-transition: transform 500ms ease-in-out;
-    -o-transition: transform 500ms ease-in-out;
-    -ms-transition: transform 500ms ease-in-out;
-    transition: transform 500ms ease-in-out;
-    max-width: none;
-}
-
-.box{
-
-    width: 800px;
-    height: 100vh;
-}
-
-.box:last-child{
-
-    width: 100%;
-}
-
-.boxa{
-
-    background-color: red;
-}
-
-.boxb{
-
-    background-color: blue;
-}
-
-.boxc{
-
-    background-color: purple;
-}
-
-.boxd{
-
-    background-color: grey;
-}
-
-/****** Side Nav********/
 
 .logo {
 
@@ -110,7 +97,7 @@ body{
 .menu nav {
 
     position: absolute;
-    top: 220px;
+    top: 183px;
     left: 0px;
     right: 0px;
     bottom: 50px;
@@ -211,4 +198,280 @@ body{
     color: #747474;
     line-height: 18px;
     letter-spacing: 1px
+}
+
+
+/*****Content(Right Panel)*****/
+
+.rightPanel{
+
+    position: absolute;
+    display: -webkit-box;
+    left: 200px;
+    right: 0px;
+    transform: translateX(0%);
+    -webkit-transition: transform 500ms ease-in-out;
+    -moz-transition: transform 500ms ease-in-out;
+    -o-transition: transform 500ms ease-in-out;
+    -ms-transition: transform 500ms ease-in-out;
+    transition: transform 500ms ease-in-out;
+    max-width: none;
+}
+
+.box{
+
+    width: 800px;
+    height: 100vh;
+    overflow-y: scroll;
+}
+
+.box:last-child{
+
+    width: 100%;
+}
+
+.boxa{
+
+    display: none;
+    background: url("../images/ProfilePic.jpg") no-repeat;
+    background-position: right 20px bottom 10px;
+}
+
+.boxd{
+
+    background-color: grey;
+}
+
+.inner {
+
+    padding: 70px;
+}
+
+.title-divider {
+
+    width: 70px;
+    height: 5px;
+    background-color: #ffb400;
+    margin: 30px 0 50px 0;
+}
+
+.button {
+
+    border: 2px solid #ffb400;
+    background-color: #FFF;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 400;
+    color: #000;
+    font-size: 16px;
+    text-transform: uppercase;
+    margin: 20px 0;
+    padding: 10px 15px;
+    display: inline-block;
+    letter-spacing: 1px;
+    transition-duration: .2s;
+    -moz-transition-duration: .2s;
+    -webkit-transition-duration: .2s;
+    -o-transition-duration: .2s;
+}
+/*******About Screen*******/
+
+.about {
+
+    /*background: url(../images/about.jpg)no-repeat 100% 0 scroll;*/
+    /*background-size: contain;*/
+}
+
+.about .inner {
+
+    width: 50%
+}
+
+.about img {
+
+    position: absolute;
+    z-index: -1;
+    left: 0;
+    top: 0
+}
+
+.about-con {
+
+    width: 100%
+}
+
+.about-con ul {
+
+    margin: 0;
+    padding: 0;
+    list-style: none
+}
+
+.about-con ul li {
+
+    border-bottom: 1px solid #dfdfdf;
+    padding: 12px 0;
+}
+
+.about-con ul li:first-child {
+
+    padding: 0 0 12px 0
+}
+.about img.signature {
+    position: inherit;
+    top: auto;
+    margin: 20px 0 0 0;
+}
+
+/*******Skills Screen******/
+
+.skills {
+
+}
+
+.skill-list ul {
+
+    margin: 0;
+    padding: 0
+}
+
+.skill-list ul li {
+
+    padding: 5px 0 0;
+    list-style: none
+}
+
+.skills-con h4 {
+
+    width: 65%;
+}
+
+.skill-list ul li:before {
+
+    content: "\f00c";
+    font-family: 'FontAwesome';
+    font-size: 15px;
+    margin: 0 5px 0 0
+}
+
+.skills-con .col-6:hover .chart .percent {
+
+    font-size: 45px;
+    color: #000;
+    transition-duration: .1s;
+    -moz-transition-duration: .1s;
+    -webkit-transition-duration: .1s;
+    -o-transition-duration: .1s;
+}
+/********#Progressbar********/
+
+.progress {
+
+    background: #d4d4d4;
+    width: 86%;
+    float: right;
+    position: relative;
+    top: 10px;
+}
+
+.progress div {
+
+    background-color: #8f8f8f;
+    height: 6px;
+}
+
+.progressbar-main {
+
+    position: relative;
+    min-height: 35px
+}
+
+.progress-value span {
+
+    font-family: 'Oswald', sans-serif;
+    font-size: 40px;
+    font-weight: 400;
+    position: absolute;
+    left: -93px;
+    color: #000;
+    top: -19px
+}
+
+.progress-value span:after {
+
+    content: "%";
+    font-weight: 100
+}
+
+.progress-bar-description {
+
+    font-weight: 500;
+    color: #000;
+    margin: 0 0 0 90px;
+    font-size: 14px;
+}
+
+/********PieChart********/
+
+.chart {
+
+    position: relative;
+    display: inline-block;
+    width: 154px;
+    height: 154px;
+    text-align: center;
+    border-radius: 50%;
+    background-color: #FFF;
+}
+
+.chart canvas {
+
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.percent {
+
+    display: inline-block;
+    line-height: 110px;
+    z-index: 2;
+    font-size: 40px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 400;
+    letter-spacing: -1px;
+    margin: 21px 0 0 0;
+    color: #ffb400;
+}
+
+.percent:after {
+
+    content: '%';
+    margin-left: 0.1em;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 100;
+}
+
+.angular {
+
+    margin-top: 100px;
+}
+
+.angular .chart {
+
+    margin-top: 0;
+}
+
+.chart-text {
+
+    margin: 30px 0 0 0
+}
+
+.chart-text p {
+
+    margin: 10px 0 0 15px
+}
+
+.chart-text h4 {
+
+    margin: 0 0 0 15px;
 }
