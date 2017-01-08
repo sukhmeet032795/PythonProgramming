@@ -510,6 +510,11 @@ input[type="text"], input[type="email"], input[type="search"], input[type="passw
     -o-transition-duration: .2s;
 }
 
+.next{
+
+    cursor: move;
+}
+
 /*******Introduction********/
 
 .introduction{
@@ -967,9 +972,10 @@ input[type="text"], input[type="email"], input[type="search"], input[type="passw
     margin-right: 23px;
 }
 
-.grid p{
+.figcaption-details div{
 
     display: flex;
+    margin-bottom: 30px;
 }
 
 .grid title{
