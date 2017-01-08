@@ -36,6 +36,11 @@
 
         padding-bottom: 200px;
     }
+
+    .introduction{
+
+        width: 530px;
+    }
 }
 
 @media screen and (max-width: 900px) {
@@ -43,6 +48,11 @@
     .box{
 
         width: 650px;
+    }
+
+    .introduction{
+
+        width: 530px;
     }
 
     .about .inner{
@@ -126,10 +136,6 @@
         margin-left: 5vw;
         float: none;
         overflow-y: auto;
-    }
-
-    .box:last-child {
-        display: none
     }
 
     .logo {
@@ -273,15 +279,31 @@
 
     .contact-details .m-margin-top30{
 
-        margin-top: 20px;
+        margin-top: 40px;
     }
+
+    .introduction{
+
+        width: 98vw;
+        margin: 0px;
+        overflow: hidden;
+    }
+
+    .introduction img{
+
+        width: 100%;
+        margin: 0px;
+        overflow: hidden;
+    }
+
+
 }
 
 @media screen and (max-width: 675px) {
 
     .inner {
 
-        padding: 130px 30px 40px 30px;
+        padding: 60px 30px 40px 30px;
     }
 
     .button {
@@ -415,6 +437,11 @@
 
     .progress-bar-description {
         margin: 0
+    }
+
+    .rightPanel-inner{
+
+        width: 96vw;
     }
 }
 @media screen and (max-width: 620px) {
