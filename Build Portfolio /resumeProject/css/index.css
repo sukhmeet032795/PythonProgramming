@@ -44,6 +44,11 @@ h3 {
     margin: 50px 0 10px;
 }
 
+h5 {
+
+    font-size: 18px;
+}
+
 .col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10, .col-11, .col-12 {
 
     float: left;
@@ -420,28 +425,37 @@ input[type="text"], input[type="email"], input[type="search"], input[type="passw
 .rightPanel{
 
     position: absolute;
-    display: -webkit-box;
     left: 200px;
     right: 0px;
-    transform: translateX(0%);
-    -webkit-transition: transform 500ms ease-in-out;
-    -moz-transition: transform 500ms ease-in-out;
-    -o-transition: transform 500ms ease-in-out;
-    -ms-transition: transform 500ms ease-in-out;
-    transition: transform 500ms ease-in-out;
-    max-width: none;
+    overflow: hidden;
+    height: 100%;
+}
+
+.rightPanel-inner{
+
+    width: 7356px;
+    position: absolute;
+    height: 100%;
+    overflow: hidden;
 }
 
 .box{
 
-    width: 800px;
-    height: 100vh;
+    width: 804px;
     overflow-y: scroll;
+    height: 100%;
+    float: left;
+    -webkit-transition: background 0.3s linear;
+    -moz-transition: background 0.3s linear;
+    -o-transition: background 0.3s linear;
+    -ms-transition: background 0.3s linear;
+    transition: background 0.3s linear;
 }
 
 .box:last-child{
 
-    width: 100%;
+    width: 1720px;
+    background-color: #000;
 }
 
 .boxa{
@@ -811,6 +825,11 @@ input[type="text"], input[type="email"], input[type="search"], input[type="passw
     -moz-transition-duration: .2s;
     -webkit-transition-duration: .2s;
     -o-transition-duration: .2s;
+}
+
+.education-con h5{
+
+    margin: 5px 0 7px 0;
 }
 
 /**********Portfolio*************/
