@@ -111,5 +111,16 @@ $(function(){
     $('nav#menu1 a').click(function () {
         $('#menu1').removeClass('active');
     });
+
+    //Keeping chapter in focus while resizing
+
+    $(window).resizeend({
+
+        onDragEnd : function(){
+
+            $('.rightPanel').animate({scrollLeft: $('.current')[0].offsetLeft}, 800);
+        },
+        runOnStart : true
+    });
 });
 
