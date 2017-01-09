@@ -86,6 +86,11 @@
         overflow-y: auto;
     }
 
+    .leftPanel{
+
+        width: 0px;
+    }
+
     nav .jspPane {
 
         width: 100% !important
