@@ -11,7 +11,6 @@ body{
     line-height: 22px;
     overflow-y: hidden;
     overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
     margin: 0px;
 }
 
@@ -19,9 +18,6 @@ a {
     color: #545454;
     text-decoration: none;
     transition-duration: .2s;
-    -moz-transition-duration: .2s;
-    -webkit-transition-duration: .2s;
-    -o-transition-duration: .2s;
 }
 
 h1, h2, h3, h4, h5 {
@@ -192,12 +188,11 @@ h5 {
 
 .white-bg {
 
-    background-color: #FFFFF
+    background-color: #FFFFFF;
 }
 
 img {
 
-    -webkit-backface-visibility: hidden;
     max-width: 100%;
 }
 
@@ -211,7 +206,6 @@ input[type="text"], textarea {
     width: 95.2%;
     font-size: 14px;
     margin: 20px 0 0;
-    -webkit-user-select: text;
 }
 
 input[type="submit"] {
@@ -228,9 +222,6 @@ input[type="submit"] {
     background-color: #FFF;
     margin: 20px 0 0;
     transition-duration: .2s;
-    -moz-transition-duration: .2s;
-    -webkit-transition-duration: .2s;
-    -o-transition-duration: .2s;
 }
 
 input[type="text"]:focus, textarea:focus {
@@ -250,9 +241,6 @@ input[type="text"], input[type="email"], input[type="search"], input[type="passw
 
     box-shadow: none !important;
     border-radius: 0px;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    -webkit-user-select: text;
 }
 
 .container{
@@ -337,9 +325,6 @@ input[type="text"], input[type="email"], input[type="search"], input[type="passw
     color: #FFF;
     text-transform: uppercase;
     transition-duration: .2s;
-    -moz-transition-duration: .2s;
-    -webkit-transition-duration: .2s;
-    -o-transition-duration: .2s;
 }
 
 .menu nav a span.active {
@@ -380,9 +365,6 @@ input[type="text"], input[type="email"], input[type="search"], input[type="passw
 
     font-size: 20px;
     transition-duration: .2s;
-    -moz-transition-duration: .2s;
-    -webkit-transition-duration: .2s;
-    -o-transition-duration: .2s;
 }
 
 .social a:hover {
@@ -447,10 +429,6 @@ input[type="text"], input[type="email"], input[type="search"], input[type="passw
     overflow-y: scroll;
     height: 100%;
     float: left;
-    -webkit-transition: background 0.3s linear;
-    -moz-transition: background 0.3s linear;
-    -o-transition: background 0.3s linear;
-    -ms-transition: background 0.3s linear;
     transition: background 0.3s linear;
 }
 
@@ -507,9 +485,6 @@ input[type="text"], input[type="email"], input[type="search"], input[type="passw
     display: inline-block;
     letter-spacing: 1px;
     transition-duration: .2s;
-    -moz-transition-duration: .2s;
-    -webkit-transition-duration: .2s;
-    -o-transition-duration: .2s;
 }
 
 .next{
@@ -616,9 +591,6 @@ input[type="text"], input[type="email"], input[type="search"], input[type="passw
     font-size: 45px;
     color: #000;
     transition-duration: .1s;
-    -moz-transition-duration: .1s;
-    -webkit-transition-duration: .1s;
-    -o-transition-duration: .1s;
 }
 /********#Progressbar********/
 
@@ -771,9 +743,6 @@ input[type="text"], input[type="email"], input[type="search"], input[type="passw
 .experience-details i {
 
     transition-duration: .2s;
-    -moz-transition-duration: .2s;
-    -webkit-transition-duration: .2s;
-    -o-transition-duration: .2s;
 }
 
 .experience-details:hover i {
@@ -786,9 +755,6 @@ input[type="text"], input[type="email"], input[type="search"], input[type="passw
 
     width: 29%;
     transition-duration: .2s;
-    -moz-transition-duration: .2s;
-    -webkit-transition-duration: .2s;
-    -o-transition-duration: .2s;
 }
 
 /**********Education***********/
@@ -828,9 +794,6 @@ input[type="text"], input[type="email"], input[type="search"], input[type="passw
 .education-details i {
 
     transition-duration: .2s;
-    -moz-transition-duration: .2s;
-    -webkit-transition-duration: .2s;
-    -o-transition-duration: .2s;
 }
 
 .education-details:hover i {
@@ -843,9 +806,6 @@ input[type="text"], input[type="email"], input[type="search"], input[type="passw
 
     width: 29%;
     transition-duration: .2s;
-    -moz-transition-duration: .2s;
-    -webkit-transition-duration: .2s;
-    -o-transition-duration: .2s;
 }
 
 .education-con h5{
@@ -916,7 +876,6 @@ input[type="text"], input[type="email"], input[type="search"], input[type="passw
 
 .grid figure {
 
-    -webkit-transition: opacity 0.2s;
     transition: opacity 0.2s;
 }
 
@@ -934,26 +893,14 @@ input[type="text"], input[type="email"], input[type="search"], input[type="passw
     width: 100%;
     height: 100%;
     transition-timing-function: ease-out;
-    -moz-transition-timing-function: ease-out;
-    -webkit-transition-timing-function: ease-out;
-    -o-transition-timing-function: ease-out;
     transition-duration: .2s;
-    -moz-transition-duration: .2s;
-    -webkit-transition-duration: .2s;
-    -o-transition-duration: .2s;
 }
 
 .grid li:hover figcaption {
 
     opacity: 1;
     transition-timing-function: ease-out;
-    -moz-transition-timing-function: ease-out;
-    -webkit-transition-timing-function: ease-out;
-    -o-transition-timing-function: ease-out;
     transition-duration: .2s;
-    -moz-transition-duration: .2s;
-    -webkit-transition-duration: .2s;
-    -o-transition-duration: .2s;
 }
 
 .figcaption-details {
@@ -1035,9 +982,6 @@ input[type="text"], input[type="email"], input[type="search"], input[type="passw
 .contact-text i {
 
     transition-duration: .2s;
-    -moz-transition-duration: .2s;
-    -webkit-transition-duration: .2s;
-    -o-transition-duration: .2s;
 }
 
 .contact-text:hover i {
@@ -1064,9 +1008,6 @@ input[type="text"], input[type="email"], input[type="search"], input[type="passw
 .contact-social i {
 
     transition-duration: .2s;
-    -moz-transition-duration: .2s;
-    -webkit-transition-duration: .2s;
-    -o-transition-duration: .2s;
 }
 
 .contact-social i:hover {
