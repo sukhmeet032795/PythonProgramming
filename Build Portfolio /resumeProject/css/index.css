@@ -67,7 +67,7 @@ h5 {
 
 .col-10 {
 
-    width: 83.33333333%
+    width: 83.33333333%;
 }
 
 .col-9 {
@@ -966,18 +966,18 @@ input[type="text"], input[type="email"], input[type="search"], input[type="passw
     width: 90%;
 }
 
+.figcaption-details div{
+
+    display: flex;
+    margin-bottom: 20px;
+}
+
 .fa-icon{
 
     color: white;
     font-size: 30px !important;
     margin-left: 13px;
     margin-right: 23px;
-}
-
-.figcaption-details div{
-
-    display: flex;
-    margin-bottom: 30px;
 }
 
 .grid title{

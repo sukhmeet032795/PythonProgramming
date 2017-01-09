@@ -284,7 +284,7 @@
 
     .introduction{
 
-        width: 98vw;
+        width: 100vw;
         margin: 0px;
         overflow: hidden;
     }
@@ -329,6 +329,11 @@
         width: 100%
     }
 
+    .figcaption-details{
+
+        justify-content: center;
+    }
+
     .figcaption-details img {
 
         height: 25px !important;
@@ -345,6 +350,24 @@
 
         font-size: 15px;
         padding: 15px 0 0
+    }
+
+    .figcaption-details div{
+
+        display: flex;
+        margin-bottom: 20px;
+    }
+
+    .figcaption-details .col-10{
+
+        width: 83.33333333%;
+        text-align: left;
+    }
+
+    .figcaption-details .col-2{
+
+        width:16.66666667%;
+        text-align: left;
     }
 
     .grid-gallery .figcaption-details span {
@@ -441,7 +464,7 @@
 
     .rightPanel-inner{
 
-        width: 97vw;
+        width: 100vw;
     }
 }
 @media screen and (max-width: 620px) {
@@ -507,6 +530,6 @@
         height: 100%;
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        text-align: -webkit-center;
     }
 }
