@@ -892,7 +892,6 @@ input[type="text"], input[type="email"], input[type="search"], input[type="passw
     color: #000;
     display: block;
     font-size: 12px;
-    margin: 0 0 25px;
     padding: 0 0 15px;
     text-transform: uppercase;
 }
@@ -980,7 +979,7 @@ input[type="text"], input[type="email"], input[type="search"], input[type="passw
     margin-right: 23px;
 }
 
-.grid title{
+.grid span{
 
     display: block;
     margin-top: 5px;

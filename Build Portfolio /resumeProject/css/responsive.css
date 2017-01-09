@@ -370,7 +370,9 @@
         text-align: left;
     }
 
-    .grid-gallery .figcaption-details span {
+    .figcaption-details span {
+
+        margin: 0px;
     }
 
     .skills-con .col-6 {
@@ -518,7 +520,7 @@
         display: none !important;
     }
 
-    .grid title{
+    .grid span{
 
         margin: 0px;
     }
