@@ -6,10 +6,10 @@
 <body>
     <!-- <form action="http://www.google.com/search"> -->
     <form>
-        <input type="text" name="text">
-        <input type="checkbox" name="check">
-        <input type="checkbox" name="check1">
-        <input type="checkbox" name="check2">
+        <input type="text" name="text"> <!-- text=awesome+good -->
+        <input type="checkbox" name="check">    <!-- check=on -->
+        <input type="checkbox" name="check1">   <!-- check1=on -->
+        <input type="checkbox" name="check2">   <!-- check2=on -->
 
         <label>
             One
@@ -24,8 +24,17 @@
         <label>
             Three
             <input type="radio" name="radioI" value="three">
-        </label>
+        </label>                                                    <!-- radioI=one -->
+
+        <select name="dropdown">
+            <option value="1">one</option>      <!-- dropdown=1 -->
+            <option>two</option>    <!-- q=two -->
+            <option>three</option>      <!-- q=three -->
+        </select>
+
         <input type="submit">
+
+
     </form>
 </body>
 </html>
