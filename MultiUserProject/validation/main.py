@@ -1,4 +1,5 @@
 import webapp2
+import cgi
 
 form = """
 <form method="post">
@@ -6,19 +7,25 @@ form = """
 
     <label>
         Month
-        <input type="text" name="month">
+        <input type="text" name="month" value = "%(month)s">
     </label>
-
+    <br>
+    <br>
     <label>
         Day
-        <input type="text" name="day">
+        <input type="text" name="day" value = "%(day)s">
     </label>
-
+    <br>
+    <br>
     <label>
         Year
-        <input type="text" name="year">
+        <input type="text" name="year" value = "%(year)s">
     </label>
-
+    <br>
+    <br>
+    <div style="color:red; font-size: 20px">%(error)s</div>
+    <br>
+    <br>
     <input type="submit">
 </form>
 """
@@ -43,8 +50,9 @@ def valid_month(month):
     if month:
         short_mon = month[:3].lower()
         temp = month_abbr.get(short_mon)
-        if(temp.lower() == month.lower() or month.lower() == temp[:3].lower()):
-            return temp
+        if(temp):
+            if(temp.lower() == month.lower() or month.lower() == temp[:3].lower()):
+                return temp
     return None
 
 def valid_day(day):
@@ -63,19 +71,32 @@ def valid_year(year):
             return y
     return None
 
+def escapeSequence(str):
+    return cgi.escape(str, quote = True)
+
 class MainPage(webapp2.RequestHandler):
+
+    def write_form(self, error = "", month = "", day = "", year = ""):
+        self.response.out.write(form % {'error' : error, 'month' : month, 'day' : day, 'year' : year})
 
     def get(self):
         self.response.headers['Content-Type'] = "text/html"
-        self.response.out.write(form)
+        self.write_form()
 
     def post(self):
-        user_month = valid_month(self.request.get("month"))
-        user_day = valid_day(self.request.get("day"))
-        user_year = valid_year(self.request.get("year"))
+        user_month = self.request.get("month")
+        user_day = self.request.get("day")
+        user_year = self.request.get("year")
 
-        if not(user_month and user_day and user_year):
-            self.response.out.write(form)
+        month = valid_month(user_month)
+        day = valid_day(user_day)
+        year = valid_year(user_year)
+
+        if not(month and day and year):
+            self.write_form("Not a valid input, my friend....try again!!!",
+                            escapeSequence(user_month),
+                            escapeSequence(user_day),
+                            escapeSequence(user_year))
         else:
             self.response.out.write("Yayyy!!! Your input is valid")
 
