@@ -7,7 +7,7 @@
     <h2>Rot 13 Tutorial</h2>
     <form method="post">
         <textarea name="text"
-            style="height: 100px; width: 400px;">{{text}}</textarea>
+            style="height: 100px; width: 400px;">{{text | escape}}</textarea>
         <br>
         <input type="submit">
     </form>
