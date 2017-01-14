@@ -25,7 +25,17 @@ class MainPage(Handler):
         items = self.request.get_all("food")
         self.render("shoppingList.html", items = items)
 
+class FizzBuzzHandler(Handler):
+    def get(self):
+        n = self.request.get("n")
+        if n and n.isdigit():
+            n = int(n)
+        else:
+            n = 0
+        self.render("fizzbuzz.html", n = n)
+
 app = webapp2.WSGIApplication([('/', MainPage),
+                               ('/fizzbuzz', FizzBuzzHandler),
                               ])
 
 

@@ -1,0 +1,10 @@
+Running Google App Engine on Linux
+To run the Development Web Server locally, run:
+
+dev_appserver.py myapp
+Where myapp is the name you want your app to have.
+
+To upload your code to Google App Engine, run:
+
+appcfg.py update helloworld/
+Where helloworld/ is the directory you're running your web app from.

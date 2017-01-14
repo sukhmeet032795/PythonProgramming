@@ -98,10 +98,14 @@ class MainPage(webapp2.RequestHandler):
                             escapeSequence(user_day),
                             escapeSequence(user_year))
         else:
-            self.response.out.write("Yayyy!!! Your input is valid")
+            self.redirect("/thanks")
 
-app = webapp2.WSGIApplication([( '/', MainPage),
-                              ],
+class ThankHandler(webapp2.RequestHandler):
+    def get(self):
+        self.response.out.write("Yayyy!!! Your input is valid")
+
+app = webapp2.WSGIApplication([('/', MainPage),
+                               ('/thanks', ThankHandler)],
                                debug = True)
 
 
