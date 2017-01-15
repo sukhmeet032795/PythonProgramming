@@ -20,8 +20,7 @@ class Handler(webapp2.RequestHandler):
     def render(self, template, **kw):
         self.write(self.render_str(template, **kw))
 
-
-class MainPage(Handler):
+class rot13(Handler):
     def get(self):
         self.render("index.html", text = "")
 
@@ -32,5 +31,10 @@ class MainPage(Handler):
             encoded = codecs.encode(text, "rot-13")
         return self.render("index.html", text = encoded)
 
-app = webapp2.WSGIApplication([('/rot13', MainPage)
+class MainPage(Handler):
+    def get(self):
+        self.render("main.html")
+
+app = webapp2.WSGIApplication([('/', MainPage),
+                               ('/rot13', rot13)
                               ])
