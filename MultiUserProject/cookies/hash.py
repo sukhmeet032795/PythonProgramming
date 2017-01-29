@@ -1,7 +1,11 @@
 import hashlib
+import hmac
 
 def hash_str(s):
     return hashlib.md5(s).hexdigest()
+
+def hash_str_better(s):
+    return hmac.new("unique".encode('utf-8'), "sss".encode('utf-8')).hexdigest()
 
 def make_secure_val(s):
     return "%s,%s" % (s, hash_str(s))
