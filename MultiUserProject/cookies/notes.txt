@@ -1,0 +1,11 @@
+Header for setting a cookie (from server to browser) -> Set-Cookie
+Header for sending a cookie (from browser to server) -> Cookie
+
+Domains receiving the cookie -> Set-Cookie: user= 123;Domain = www.udacity.com
+Ans -> www.udacity.com & other.www.udacity.com
+
+Hashing
+
+Library : hashlib
+
+hashlib.sha256("udacity".encode('utf-8')).hexdigest()
