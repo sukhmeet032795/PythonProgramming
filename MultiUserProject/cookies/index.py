@@ -2,17 +2,32 @@ import webapp2
 import jinja2
 import os
 import hashlib
+import hmac
+import string
+import random
 from google.appengine.ext import db
+
+SECRET = "sonu1995"
 
 templates_dir = os.path.join(os.path.dirname(__file__), 'templates')
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(templates_dir),
                                 autoescape = True)
 
-def hash(s):
-    return hashlib.md5(s.encode('utf-8')).hexdigest()
+# def hash(s):
+    # return hashlib.md5(s.encode('utf-8')).hexdigest()
+
+def make_salt():
+    return "".join(random.choice(string.ascii_letters) for x in range(5))
+
+def hash_better(s):
+    hmac.new(SECRET.encode('utf-8'), s.encode('utf-8')).hexdigest()
 
 def make_secure_hash(s):
-    return ("%s|%s" % (s, hash(s)))
+    salt = make_salt()
+    return hashlib.sha256(salt.encode('utf-8') + s.encode('utf-8')).hexdigest()
+
+# def make_secure_hash(s):
+#     return ("%s|%s" % (s, hash_better(s)))
 
 def check_hash(h):
     val = h.split("|")[0]
