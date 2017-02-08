@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <form method = "POST">
+
+        <fieldset>
+            <legend>
+                <span class="number">1</span>
+                Your basic info
+            </legend>
+
+            <label for="name">First Name:</label>
+            <input type="text" name="firstname" value="{{firstname}}">
+            {{error_firstname}}
+
+            <label for="name">Last Name:</label>
+            <input type="text" name="lastname" value="{{lastname}}">
+            {{error_lastname}}
+
+            <label for="name">UserName:</label>
+            <input type="text" name="username" value="{{username}}">
+            {{error_username}}
+
+            <label for="mail">Email:</label>
+            <input type="text" name="email" value="{{email}}">
+            {{error_email}}
+
+            <label for="password">Password:</label>
+            <input type="text" name="password" value="{{password}}">
+            {{error_password}}
+
+            <label for="cpassword">Confirm Password:</label>
+            <input type="text" name="cpassword" value="{{cpassword}}">
+            {{error_cpassword}}
+
+        </fieldset>
+        <input type="submit">
+
+        <div id = "Login">
+            <fieldset>
+                <legend><span class="number">1</span>Your login details</legend>
+                <label for="mail">UserName:</label>
+                <input type="text" name="lusername" value="{{lusername}}">
+                {{error_lusername}}
+
+                <label for="password">Password:</label>
+                <input type="password" name="lpassword" value="{{lpassword}}">
+                {{error_lusername}}
+            </fieldset>
+
+            <button>Login</button>
+        </div>
+    </form>
+{% endblock %}
