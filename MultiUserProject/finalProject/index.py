@@ -4,6 +4,8 @@ import hashlib
 import hmac
 import jinja2
 import re
+import random
+import string
 
 from google.appengine.ext import db
 
@@ -32,6 +34,8 @@ class BlogHandler(webapp2.RequestHandler):
 
 # User Registration and Login Module
 
+######################
+
 USER_RE = re.compile(r"^[a-zA-Z]{3,20}$")
 def valid_name(name):
     return name and USER_RE.match(name)
@@ -48,6 +52,26 @@ EMAIL_RE  = re.compile(r'^[\S]+@[\S]+\.[\S]+$')
 def valid_email(email):
     return not email or EMAIL_RE.match(email)
 
+######################
+
+def generate_salt():
+    return "".join(random.choice(string.ascii_letters) for x in range(5))
+
+def make_pw_hash(username, pwd, salt = None):
+
+    if not salt:
+        salt = generate_salt()
+    return "%s,%s" % (salt, hashlib.sha256(salt.encode("utf-8") + username.encode("utf-8") + pwd.encode("utf-8")).hexdigest())
+
+def check_pw_hash(username, pwd, hash):
+
+    salt = hash.split(",")[0]
+    if make_pw_hash(username, pwd, salt) == hash:
+        return True
+    return False
+
+######################
+
 class User(db.Model):
     firstname = db.StringProperty(required  = True)
     lastname = db.StringProperty(required  = True)
@@ -61,7 +85,16 @@ class User(db.Model):
 
     @classmethod
     def by_username(cls, username = None):
-        return User.all().filter(username = username).get()
+        return User.all().filter("username", username).get()
+
+    @classmethod
+    def register(cls, fname, lname, uname, email, password):
+        pw_hash = make_pw_hash(uname, password)
+        return User(firstname = fname,
+                    lastname = lname,
+                    username = uname,
+                    email = email,
+                    pw_hash = pw_hash)
 
 class Signup(BlogHandler):
 
@@ -103,7 +136,55 @@ class Signup(BlogHandler):
             error = True
 
         if error:
-            self.render("signup.html", **p)
+            return self.render("signup.html", **p)
+        else:
+
+            user = User.by_username(uname)
+
+            if user:
+                p["error_username"] = "UserName is not available"
+                return self.render("signup.html", **p)
+            else:
+                user = User.register(fname, lname, uname, email, password)
+                user.put()
+                self.redirect("/newPost")
+
+class Login(BlogHandler):
+
+    def get(self):
+        self.render("login.html")
+
+    def post(self):
+        username = self.request.get("username")
+        password = self.request.get("password")
+
+        p = {"username" : username}
+        error = False
+
+        if not valid_username(username):
+            p["error_username"] = "Username is not valid"
+            error = True
+
+        if not valid_password(password):
+            p["error_password"] = "Password is not valid(Can't be Empty)"
+            error = True
+
+        if error:
+            return self.render("login.html", **p)
+
+        user = User.by_username(username)
+
+        if not user:
+            p["error_form"] = "No such user exists"
+            return self.render("login.html", **p)
+        else:
+
+            if not check_pw_hash(username, password, user.pw_hash):
+                p["error_form"] = "UserName/Password combination is invalid"
+                return self.render("login.html", **p)
+            else:
+                self.redirect("/newPost")
+
 
 # Blog Module
 
@@ -150,5 +231,6 @@ class NewPost(BlogHandler):
 
 app = webapp2.WSGIApplication([("/", Home),
                                ("/newPost", NewPost),
-                               ("/signup", Signup)
+                               ("/signup", Signup),
+                               ("/login", Login),
                               ])
