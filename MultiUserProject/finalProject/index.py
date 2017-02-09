@@ -195,10 +195,13 @@ class Blog(db.Model):
     modified = db.DateTimeProperty(auto_now = True)
     created_by = db.ReferenceProperty(User)
 
-    @staticmethod
     def render(self):
-        self._render_text = self.content.replace('\n', '<br>')
-        return render_str("blog.html", blog = self)
+        self._render_text = self.subject.replace('\n', '<br>')
+        return render_str("post.html", blog = self)
+
+    @classmethod
+    def getBlog(cls, blogId):
+        return cls.get_by_id(int(blogId))
 
 class Home(BlogHandler):
 
@@ -227,10 +230,24 @@ class NewPost(BlogHandler):
             error = True
 
         if error:
-            self.render("newBlog.html", **p)
+            return self.render("newBlog.html", **p)
+        else:
+
+            user = User.by_username("sukhmeet032795")
+            blog = Blog(title = title, subject = subject, created_by = user)
+            blog.put()
+
+            return self.redirect("/blog/" + str(blog.key().id()))
+
+class showBlog(BlogHandler):
+
+    def get(self, blogId):
+        blog = Blog.getBlog(blogId)
+        self.render("blog.html", blog = blog)
 
 app = webapp2.WSGIApplication([("/", Home),
                                ("/newPost", NewPost),
                                ("/signup", Signup),
                                ("/login", Login),
+                               ("/blog/(\d+)", showBlog),
                               ])
