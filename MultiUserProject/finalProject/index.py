@@ -18,6 +18,56 @@ def render_str(template, **params):
     t = jinja_env.get_template(template)
     return t.render(params)
 
+
+#############Encryption Handling#############
+
+#############Cookie Hash#############
+
+secret_key = ",qLY5!RD06.w1onRFC$M8=w<-#M+DjvA,9<mB,*Yq#ZavEf.k`KZKP\2)V:(.,E"
+
+def make_cookie_hash(userId):
+    return ("%s|%s" % (str(userId), hmac.new( str(userId).encode("utf-8") + secret_key.encode("utf-8") ).hexdigest()))
+
+def check_cookie_hash(hash):
+
+    if not hash:
+        return False
+
+    userId = hash.split("|")[0]
+    if hash == make_cookie_hash(userId):
+        return True
+    return False
+
+#######################################
+
+#############Password Hash#############
+
+def generate_salt():
+    return "".join(random.choice(string.ascii_letters) for x in range(5))
+
+def make_pw_hash(username, pwd, salt = None):
+
+    if not salt:
+        salt = generate_salt()
+    return "%s,%s" % (salt, hashlib.sha256(salt.encode("utf-8") + username.encode("utf-8") + pwd.encode("utf-8")).hexdigest())
+
+def check_pw_hash(username, pwd, hash):
+
+    if not hash:
+        return False
+
+    salt = hash.split(",")[0]
+    if make_pw_hash(username, pwd, salt) == hash:
+        return True
+    return False
+
+#######################################
+
+#############Encryption Handling Ends#############
+
+
+#############Main Handler#############
+
 class BlogHandler(webapp2.RequestHandler):
 
     def write(self, *a, **kw):
@@ -30,6 +80,21 @@ class BlogHandler(webapp2.RequestHandler):
 
     def render(self, template, **kw):
         self.write(self.render_str(template, **kw))
+
+    def login(self, name, val):
+        cookie_hash = make_cookie_hash(val)
+        self.response.headers.add_header("Set-Cookie", "%s=%s; Path=/" % (name, cookie_hash))
+
+    def logout(self, name):
+        self.response.headers.add_header("Set-Cookie", "%s=; Path=/" % (name))
+
+    def get_cookie_hash(self, name):
+        return self.request.cookies.get(str(name))
+
+    def get_user_id(self, hash):
+        return hash.split("|")[0]
+
+###########Main Handler Ends###########
 
 
 # User Registration and Login Module
@@ -53,22 +118,6 @@ def valid_email(email):
     return not email or EMAIL_RE.match(email)
 
 ######################
-
-def generate_salt():
-    return "".join(random.choice(string.ascii_letters) for x in range(5))
-
-def make_pw_hash(username, pwd, salt = None):
-
-    if not salt:
-        salt = generate_salt()
-    return "%s,%s" % (salt, hashlib.sha256(salt.encode("utf-8") + username.encode("utf-8") + pwd.encode("utf-8")).hexdigest())
-
-def check_pw_hash(username, pwd, hash):
-
-    salt = hash.split(",")[0]
-    if make_pw_hash(username, pwd, salt) == hash:
-        return True
-    return False
 
 ######################
 
@@ -147,6 +196,7 @@ class Signup(BlogHandler):
             else:
                 user = User.register(fname, lname, uname, email, password)
                 user.put()
+                self.login("user", user.key().id())
                 self.redirect("/newPost")
 
 class Login(BlogHandler):
@@ -183,8 +233,14 @@ class Login(BlogHandler):
                 p["error_form"] = "UserName/Password combination is invalid"
                 return self.render("login.html", **p)
             else:
+                self.login("user", user.key().id())
                 self.redirect("/newPost")
 
+class Logout(BlogHandler):
+
+    def get(self):
+        self.logout("user")
+        self.redirect("/")
 
 # Blog Module
 
@@ -233,7 +289,13 @@ class NewPost(BlogHandler):
             return self.render("newBlog.html", **p)
         else:
 
-            user = User.by_username("sukhmeet032795")
+            cookie_hash = self.get_cookie_hash("user")
+            if not check_cookie_hash(cookie_hash):
+                return self.redirect("/login")
+            else:
+                userId = self.get_user_id(cookie_hash)
+
+            user = User.by_id(userId)
             blog = Blog(title = title, subject = subject, created_by = user)
             blog.put()
 
@@ -249,5 +311,6 @@ app = webapp2.WSGIApplication([("/", Home),
                                ("/newPost", NewPost),
                                ("/signup", Signup),
                                ("/login", Login),
+                               ("/logout", Logout),
                                ("/blog/(\d+)", showBlog),
                               ])
