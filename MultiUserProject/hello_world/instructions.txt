@@ -1,3 +1,5 @@
 Running Command:
 
 dev_appserver.py .
+
+gcloud app deploy app.yaml index.yaml

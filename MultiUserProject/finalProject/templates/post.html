@@ -1,15 +1,19 @@
-<div class="post">
-  <div class="post-heading">
-    <div class="post-title">
-      {{blog.title}}
+<div class="post" id="{{blog.key().id()}}" style="margin: 20px">
+    <div class="post-heading" style="display: flex; margin: 20px; justify-content: space-between;">
+        <div class="post-title">
+            {{blog.title}}
+        </div>
+
+        <div class="post-date">
+            {{blog.created.strftime("%b %d, %Y")}}
+        </div>
     </div>
 
-    <div class="post-date">
-      {{blog.created.strftime("%b %d, %Y")}}
+    <div class="post-content" style="margin: 20px">
+        {{blog._render_text | safe}}
     </div>
-  </div>
 
-  <div class="post-content">
-    {{blog._render_text | safe}}
-  </div>
+    <div class="post-like" style="margin: 20px">
+        Like
+    </div>
 </div>
