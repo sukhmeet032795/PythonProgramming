@@ -307,10 +307,17 @@ class showBlog(BlogHandler):
         blog = Blog.getBlog(blogId)
         self.render("blog.html", blog = blog)
 
+class likeBlog(BlogHandler):
+
+    def post(self):
+        blogId = self.request.get("blogId")
+        print blogId
+
 app = webapp2.WSGIApplication([("/", Home),
                                ("/newPost", NewPost),
                                ("/signup", Signup),
                                ("/login", Login),
                                ("/logout", Logout),
                                ("/blog/(\d+)", showBlog),
+                               ("/likeBlog", likeBlog)
                               ])
