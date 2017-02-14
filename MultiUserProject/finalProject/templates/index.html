@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block header %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -7,18 +7,64 @@
     <script type="text/javascript">
 
         $(function() {
-            $("#like").click(function(e){
+            $(".like").click(function(e){
 
-                var el = $(this);
-
-                var blogId = $(el).parent().parent().attr("id");
+                var el = $(e.currentTarget);
+                console.log(el.parents())
+                var blogParent = $(el).parents()[1];
+                var blogId = $(blogParent).attr("id");
                 var data = { "blogId" : blogId };
 
-                var savelike = $.ajax({
+                likeAjax = $.ajax({
                     type: 'POST',
                     url: "/likeBlog",
                     data: data,
-                    success: function(resultData) { alert("Save Complete") }
+                    dataType: 'json',
+                    success: function(response){
+
+                        if (response.status == "success"){
+
+                            alert(response.msg);
+                        }
+                        else{
+
+                            alert(response.msg);
+                        }
+                    },
+                    error: function(response){
+                         alert("booo");
+                    }
+                });
+            });
+
+            $("input[name='comment']").on("focusout", function(e){
+
+                var el = e.currentTarget
+                var comment_val = $(el).val();
+                var blogParent = $(el).parents()[3];
+                var blogId = $(blogParent).attr("id");
+                var data = { "blogId" : blogId, "comment" : comment_val };
+
+                commentAjax = $.ajax({
+                    type: 'POST',
+                    url: "/commentBlog",
+                    data: data,
+                    dataType: 'json',
+                    success: function(response){
+
+                        $(el).val() = "";
+                        if (response.status == "success"){
+
+                            alert(response.msg);
+                        }
+                        else{
+
+                            alert(response.msg);
+                        }
+                    },
+                    error: function(response){
+                         alert("booo");
+                    }
                 });
             });
         });

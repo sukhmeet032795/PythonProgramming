@@ -6,6 +6,7 @@ import jinja2
 import re
 import random
 import string
+import json
 
 from google.appengine.ext import db
 
@@ -244,11 +245,22 @@ class Logout(BlogHandler):
 
 # Blog Module
 
+class Comment(db.Model):
+    content = db.TextProperty(required = True)
+    created = db.DateTimeProperty(auto_now_add = True)
+    created_by = db.ReferenceProperty(User)
+
+    @classmethod
+    def getComment(cls, commentId):
+        return cls.get_by_id(int(commentId))
+
 class Blog(db.Model):
     title = db.StringProperty(required = True)
     subject = db.TextProperty(required = True)
     created = db.DateTimeProperty(auto_now_add = True)
     modified = db.DateTimeProperty(auto_now = True)
+    likes = db.ListProperty(int)
+    comments = db.ListProperty(int)
     created_by = db.ReferenceProperty(User)
 
     def render(self):
@@ -262,8 +274,33 @@ class Blog(db.Model):
 class Home(BlogHandler):
 
     def get(self):
-        blogs = Blog.all()
-        self.render("index.html", blogs = blogs)
+        allBlogs = Blog.all()
+
+        cookie_hash = self.get_cookie_hash("user")
+        if not check_cookie_hash(cookie_hash):
+            return self.render("index.html", blogs = allBlogs)
+
+        userId = self.get_user_id(cookie_hash)
+
+        i = 0
+        for blog in allBlogs:
+
+            check = 0
+            if userId in blog.likes:
+                check = 1
+
+            comments = []
+
+            for commentId in blog.comments:
+                comment = Comment.getComment(commentId)
+                comments.append(comment)
+
+            setattr(allBlogs[i], "allComments", comments)
+            setattr(allBlogs[i], "likeStatus" , check)
+            i = i + 1
+
+        print (allBlogs[0]["likeStatus"])
+        self.render("index.html", blogs = allBlogs)
 
 class NewPost(BlogHandler):
 
@@ -311,7 +348,76 @@ class likeBlog(BlogHandler):
 
     def post(self):
         blogId = self.request.get("blogId")
-        print blogId
+        blog = Blog.getBlog(blogId)
+        cookie_hash = self.get_cookie_hash("user")
+        if not check_cookie_hash(cookie_hash):
+            return self.render("/login")
+        else:
+            userId = self.get_user_id(cookie_hash)
+
+        user = User.by_id(userId)
+
+        if not user:
+            msg = "No User Logged In"
+            status = "error"
+
+        userId = user.key().id()
+        blogUserId = blog.created_by.key().id()
+
+        if (blogUserId == userId):
+            msg = "You can't like your own post"
+            status = "error"
+
+        elif blog and user:
+
+            if userId in blog.likes:
+                blog.likes.remove(int(userId))
+                blog.put()
+                msg = "You removed your like"
+                status = "success"
+
+            else:
+                blog.likes.append(int(user.key().id()))
+                blog.put()
+                msg = "Awesome Work Done!!!"
+                status = "success"
+
+        response = {"status": status, "msg": msg}
+        return self.write(json.dumps(response))
+
+class commentBlog(BlogHandler):
+
+    def post(self):
+        blogId = self.request.get("blogId")
+        comment = self.request.get("comment")
+        blog = Blog.getBlog(blogId)
+        cookie_hash = self.get_cookie_hash("user")
+        if not check_cookie_hash(cookie_hash):
+            return self.render("/login")
+        else:
+            userId = self.get_user_id(cookie_hash)
+
+        user = User.by_id(userId)
+
+        if not user:
+            msg = "No User Logged In"
+            status = "error"
+
+        userId = user.key().id()
+        blogUserId = blog.created_by.key().id()
+
+        if blog and user:
+
+            comment = Comment(content = comment, created_by = user)
+            comment.put()
+            blog.comments.append(int(comment.key().id()))
+            blog.put()
+
+            msg = "Comment Created"
+            status = "success"
+
+        response = {"status": status, "msg": msg}
+        return self.write(json.dumps(response))
 
 app = webapp2.WSGIApplication([("/", Home),
                                ("/newPost", NewPost),
@@ -319,5 +425,6 @@ app = webapp2.WSGIApplication([("/", Home),
                                ("/login", Login),
                                ("/logout", Logout),
                                ("/blog/(\d+)", showBlog),
-                               ("/likeBlog", likeBlog)
+                               ("/likeBlog", likeBlog),
+                               ("/commentBlog", commentBlog),
                               ])

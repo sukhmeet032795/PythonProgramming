@@ -12,25 +12,38 @@
     <div class="post-content" style="margin: 20px">
         {{blog._render_text | safe}}
     </div>
+    {{blog.likeStatus}}
 
     <div class="post-review" style="margin: 20px; display: flex; width: 10%; justify-content: space-between;">
-        <label style="display: flex; justify-content: space-between; margin-right: 30px;" id="like">
+        <label style="display: flex; justify-content: space-between; margin-right: 30px;" class = "like">
             <i class="fa fa-heart" aria-hidden="true" style="color: grey; margin-right: 10px;"></i>
-            <p style="margin: 0px;">Like</p>
+            {% if blog.likeStatus == 0 %}
+                <p style="margin: 0px;">Like</p>
+            {% else %}
+                <p style="margin: 0px;">Liked</p>
+            {% endif %}
         </label>
-        <label style="display: flex; justify-content: space-between; margin-right: 30px;" id="comment">
+        <label style="display: flex; justify-content: space-between; margin-right: 30px;" class = "comment">
             <i class="fa fa-comment" aria-hidden="true" style="color: grey; margin-right: 10px;"></i>
             <p style="margin: 0px;">Comment</p>
         </label>
     </div>
 
-    <div class="likes-container">
-        {{blog.likes}}
+    <div class="post-likes" style="margin: 20px;">
+        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+        {{ blog.likes | count }} Likes
     </div>
 
-    <div class="comments-container">
-        {% for comment in blog.comments %}
-            {{comment}}
-        {% endfor %}
+    <div class="post-comments" style="margin: 20px;">
+        <div class="show-comments">
+            {% for comment in blog.comments %}
+                {{comment}}
+            {% endfor %}
+        </div>
+        <div class="write-comment">
+            <label>
+                <input style="width: 100%; line-height: 30px; font-size: 16px;" type="text" name="comment" placeholder="Write a comment...">
+            </label>
+        </div>
     </div>
 </div>
