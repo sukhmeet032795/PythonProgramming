@@ -73,6 +73,6 @@
 
 {% block content %}
     {% for blog in blogs %}
-        {{ blog.render() | safe }}
+        {% include "post.html" %}
     {% endfor %}
 {% endblock %}

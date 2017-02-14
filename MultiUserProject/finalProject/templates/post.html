@@ -1,18 +1,18 @@
-<div class="post" id="{{blog.key().id()}}" style="margin: 20px">
+<div class="post" id="{{blog['id']}}" style="margin: 20px">
     <div class="post-heading" style="display: flex; margin: 20px; justify-content: space-between;">
         <div class="post-title">
-            {{blog.title}}
+            {{blog["title"]}}
         </div>
 
         <div class="post-date">
-            {{blog.created.strftime("%b %d, %Y")}}
+            {{blog["created"].strftime("%b %d, %Y")}}
         </div>
     </div>
 
     <div class="post-content" style="margin: 20px">
-        {{blog._render_text | safe}}
+        {{blog["render_text"]}}
     </div>
-    {{blog.likeStatus}}
+    {{blog["likeStatus"]}}
 
     <div class="post-review" style="margin: 20px; display: flex; width: 10%; justify-content: space-between;">
         <label style="display: flex; justify-content: space-between; margin-right: 30px;" class = "like">
@@ -31,13 +31,13 @@
 
     <div class="post-likes" style="margin: 20px;">
         <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-        {{ blog.likes | count }} Likes
+        {{ blog["likes"] | count }} Likes
     </div>
 
     <div class="post-comments" style="margin: 20px;">
         <div class="show-comments">
-            {% for comment in blog.comments %}
-                {{comment}}
+            {% for comment in blog["comments"] %}
+                {{comment.content}}
             {% endfor %}
         </div>
         <div class="write-comment">

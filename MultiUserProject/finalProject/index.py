@@ -281,8 +281,8 @@ class Home(BlogHandler):
             return self.render("index.html", blogs = allBlogs)
 
         userId = self.get_user_id(cookie_hash)
+        blogObjs = []
 
-        i = 0
         for blog in allBlogs:
 
             check = 0
@@ -295,12 +295,11 @@ class Home(BlogHandler):
                 comment = Comment.getComment(commentId)
                 comments.append(comment)
 
-            setattr(allBlogs[i], "allComments", comments)
-            setattr(allBlogs[i], "likeStatus" , check)
-            i = i + 1
+            render_text = blog.subject.replace("\n", "<br>")
+            blogObj = { "title" : blog.title.encode("utf-8") , "created" : blog.created, "id" : int(blog.key().id()), "comments" : comments, "likeStatus" : check, "render_text" : render_text.encode("utf-8"), "likes" : blog.likes}
+            blogObjs.append(blogObj)
 
-        print (allBlogs[0]["likeStatus"])
-        self.render("index.html", blogs = allBlogs)
+        self.render("index.html", blogs = blogObjs)
 
 class NewPost(BlogHandler):
 
@@ -362,6 +361,7 @@ class likeBlog(BlogHandler):
             status = "error"
 
         userId = user.key().id()
+        print (blog)
         blogUserId = blog.created_by.key().id()
 
         if (blogUserId == userId):
