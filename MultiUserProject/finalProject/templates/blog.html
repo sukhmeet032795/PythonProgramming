@@ -1,5 +1,76 @@
 {% extends "base.html" %}
 
+{% block header %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://use.fontawesome.com/329b68c3d5.js"></script>
+
+    <script type="text/javascript">
+
+        $(function() {
+            $(".like").click(function(e){
+
+                var el = $(e.currentTarget);
+                console.log(el.parents())
+                var blogParent = $(el).parents()[1];
+                var blogId = $(blogParent).attr("id");
+                var data = { "blogId" : blogId };
+
+                likeAjax = $.ajax({
+                    type: 'POST',
+                    url: "/likeBlog",
+                    data: data,
+                    dataType: 'json',
+                    success: function(response){
+
+                        if (response.status == "success"){
+
+                            alert(response.msg);
+                        }
+                        else{
+
+                            alert(response.msg);
+                        }
+                    },
+                    error: function(response){
+                         alert("booo");
+                    }
+                });
+            });
+
+            $("input[name='comment']").on("focusout", function(e){
+
+                var el = e.currentTarget
+                var comment_val = $(el).val();
+                var blogParent = $(el).parents()[3];
+                var blogId = $(blogParent).attr("id");
+                var data = { "blogId" : blogId, "comment" : comment_val };
+
+                commentAjax = $.ajax({
+                    type: 'POST',
+                    url: "/commentBlog",
+                    data: data,
+                    dataType: 'json',
+                    success: function(response){
+
+                        $(el).val() = "";
+                        if (response.status == "success"){
+
+                            alert(response.msg);
+                        }
+                        else{
+
+                            alert(response.msg);
+                        }
+                    },
+                    error: function(response){
+                         alert("booo");
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}
+
 {% block content %}
-    {{ blog.render() | safe }}
+    {% include "post.html" %}
 {% endblock %}

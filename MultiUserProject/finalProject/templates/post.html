@@ -10,40 +10,45 @@
     </div>
 
     <div class="post-content" style="margin: 20px">
-        {{blog["render_text"]}}
-    </div>
-    {{blog["likeStatus"]}}
-
-    <div class="post-review" style="margin: 20px; display: flex; width: 10%; justify-content: space-between;">
-        <label style="display: flex; justify-content: space-between; margin-right: 30px;" class = "like">
-            <i class="fa fa-heart" aria-hidden="true" style="color: grey; margin-right: 10px;"></i>
-            {% if blog.likeStatus == 0 %}
-                <p style="margin: 0px;">Like</p>
-            {% else %}
-                <p style="margin: 0px;">Liked</p>
-            {% endif %}
-        </label>
-        <label style="display: flex; justify-content: space-between; margin-right: 30px;" class = "comment">
-            <i class="fa fa-comment" aria-hidden="true" style="color: grey; margin-right: 10px;"></i>
-            <p style="margin: 0px;">Comment</p>
-        </label>
+        {{blog["render_text"] | safe}}
     </div>
 
-    <div class="post-likes" style="margin: 20px;">
-        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-        {{ blog["likes"] | count }} Likes
-    </div>
-
-    <div class="post-comments" style="margin: 20px;">
-        <div class="show-comments">
-            {% for comment in blog["comments"] %}
-                {{comment.content}}
-            {% endfor %}
-        </div>
-        <div class="write-comment">
-            <label>
-                <input style="width: 100%; line-height: 30px; font-size: 16px;" type="text" name="comment" placeholder="Write a comment...">
+    <div class="post-review" style="margin: 20px;">
+        <div class="statusBar" style="display: flex; width: 10%; justify-content: space-between;">
+            <label style="display: flex; justify-content: space-between; margin-right: 30px;" class = "like">
+                <i class="fa fa-heart" aria-hidden="true" style="color: grey; margin-right: 10px;"></i>
+                {% if blog.likeStatus == 0 %}
+                    <p style="margin: 0px;">Like</p>
+                {% else %}
+                    <p style="margin: 0px;">Liked</p>
+                {% endif %}
             </label>
+            <label style="display: flex; justify-content: space-between; margin-right: 30px;" class = "comment">
+                <i class="fa fa-comment" aria-hidden="true" style="color: grey; margin-right: 10px;"></i>
+                <p style="margin: 0px;">Comment</p>
+            </label>
+        </div>
+
+        <div class="post-likes">
+            <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+            <span>{{ blog["likes"] | count }}</span> Likes
+        </div>
+
+        <div class="post-comments">
+            <div class="show-comments">
+                {% for comment in blog["comments"] %}
+                    <div class="comment" id = "{{comment['id']}}" style = "display: flex;">
+                        <p class="commentBy" style="justify-content: left; margin-right: 40px">{{comment["name"]}}</p>
+                        <p class="commentContent" style="justify-content: left; margin-right: 40px">{{comment["content"]}}</p>
+                        <i class="fa fa-times deleteComment" aria-hidden="true" style="margin: auto 0px;"></i>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="write-comment">
+                <label>
+                    <input style="width: 100%; line-height: 30px; font-size: 16px;" type="text" name="comment" placeholder="Write a comment...">
+                </label>
+            </div>
         </div>
     </div>
 </div>

@@ -274,13 +274,13 @@ class Blog(db.Model):
 class Home(BlogHandler):
 
     def get(self):
-        allBlogs = Blog.all()
+        allBlogs = Blog.all().order("-created")
 
         cookie_hash = self.get_cookie_hash("user")
-        if not check_cookie_hash(cookie_hash):
-            return self.render("index.html", blogs = allBlogs)
+        userId = None
 
-        userId = self.get_user_id(cookie_hash)
+        if check_cookie_hash(cookie_hash):
+            userId = self.get_user_id(cookie_hash)
         blogObjs = []
 
         for blog in allBlogs:
@@ -291,12 +291,18 @@ class Home(BlogHandler):
 
             comments = []
 
-            for commentId in blog.comments:
-                comment = Comment.getComment(commentId)
-                comments.append(comment)
+            allComments = blog.comments
+            if (len(allComments) != 0):
+                allComments.reverse()
+                for commentId in allComments:
+                    comment = Comment.getComment(commentId)
+                    user = User.by_id(comment.created_by.key().id())
+                    userName = user.firstname + " " + user.lastname
+                    commentObj = { "id" : int(commentId), "content" : comment.content.encode("utf-8") , "name" : userName.encode("utf-8") }
+                    comments.append(commentObj)
 
             render_text = blog.subject.replace("\n", "<br>")
-            blogObj = { "title" : blog.title.encode("utf-8") , "created" : blog.created, "id" : int(blog.key().id()), "comments" : comments, "likeStatus" : check, "render_text" : render_text.encode("utf-8"), "likes" : blog.likes}
+            blogObj = { "title" : blog.title , "created" : blog.created, "id" : int(blog.key().id()), "comments" : comments, "likeStatus" : check, "render_text" : render_text, "likes" : blog.likes}
             blogObjs.append(blogObj)
 
         self.render("index.html", blogs = blogObjs)
@@ -341,7 +347,30 @@ class showBlog(BlogHandler):
 
     def get(self, blogId):
         blog = Blog.getBlog(blogId)
-        self.render("blog.html", blog = blog)
+
+        cookie_hash = self.get_cookie_hash("user")
+        userId = None
+
+        if check_cookie_hash(cookie_hash):
+            userId = self.get_user_id(cookie_hash)
+
+        check = 0
+        if userId in blog.likes:
+            check = 1
+
+        comments = []
+
+        for commentId in blog.comments:
+            comment = Comment.getComment(commentId)
+            user = User.by_id(comment.created_by.key().id())
+            userName = user.firstname + " " + user.lastname
+            commentObj = { "id" : int(commentId) , "content" : comment.content.encode("utf-8") , "name" : userName.encode("utf-8") }
+            comments.append(commentObj)
+
+        render_text = blog.subject.replace("\n", "<br>")
+        blogObj = { "title" : blog.title , "created" : blog.created, "id" : int(blog.key().id()), "comments" : comments, "likeStatus" : check, "render_text" : render_text, "likes" : blog.likes}
+        print (blogObj)
+        self.render("blog.html", blog = blogObj)
 
 class likeBlog(BlogHandler):
 
@@ -349,23 +378,24 @@ class likeBlog(BlogHandler):
         blogId = self.request.get("blogId")
         blog = Blog.getBlog(blogId)
         cookie_hash = self.get_cookie_hash("user")
-        if not check_cookie_hash(cookie_hash):
-            return self.render("/login")
-        else:
-            userId = self.get_user_id(cookie_hash)
+        user = None
 
-        user = User.by_id(userId)
+        if check_cookie_hash(cookie_hash):
+            userId = self.get_user_id(cookie_hash)
+            user = User.by_id(userId)
 
         if not user:
-            msg = "No User Logged In"
+            msg = "nouser"
             status = "error"
+            response = {"status": status, "msg": msg}
+            return self.write(json.dumps(response))
 
         userId = user.key().id()
-        print (blog)
         blogUserId = blog.created_by.key().id()
+        likes_count = len(blog.likes)
 
         if (blogUserId == userId):
-            msg = "You can't like your own post"
+            msg = "selflike"
             status = "error"
 
         elif blog and user:
@@ -373,51 +403,81 @@ class likeBlog(BlogHandler):
             if userId in blog.likes:
                 blog.likes.remove(int(userId))
                 blog.put()
-                msg = "You removed your like"
+                msg = "unliked"
                 status = "success"
 
             else:
                 blog.likes.append(int(user.key().id()))
                 blog.put()
-                msg = "Awesome Work Done!!!"
+                msg = "liked"
                 status = "success"
 
-        response = {"status": status, "msg": msg}
+            likes_count = len(blog.likes)
+
+        response = {"status": status, "msg": msg, "count" : str(likes_count)}
         return self.write(json.dumps(response))
 
 class commentBlog(BlogHandler):
 
     def post(self):
         blogId = self.request.get("blogId")
-        comment = self.request.get("comment")
+        status = self.request.get("status")
+
         blog = Blog.getBlog(blogId)
         cookie_hash = self.get_cookie_hash("user")
-        if not check_cookie_hash(cookie_hash):
-            return self.render("/login")
-        else:
-            userId = self.get_user_id(cookie_hash)
+        user = None
 
-        user = User.by_id(userId)
+        if check_cookie_hash(cookie_hash):
+            userId = int(self.get_user_id(cookie_hash))
+            user = User.by_id(userId)
 
         if not user:
-            msg = "No User Logged In"
+            msg = "nouser"
             status = "error"
+            response = {"status": status, "msg": msg}
+            return self.write(json.dumps(response))
 
-        userId = user.key().id()
-        blogUserId = blog.created_by.key().id()
+        if status == "createComment":
 
-        if blog and user:
+            content = self.request.get("comment")
+            if blog and user:
 
-            comment = Comment(content = comment, created_by = user)
-            comment.put()
-            blog.comments.append(int(comment.key().id()))
-            blog.put()
+                comment = Comment(content = content, created_by = user)
+                comment.put()
+                blog.comments.append(int(comment.key().id()))
+                blog.put()
 
-            msg = "Comment Created"
-            status = "success"
+                name = user.firstname + " " + user.lastname
 
-        response = {"status": status, "msg": msg}
-        return self.write(json.dumps(response))
+                commentObj = { "id" : int(comment.key().id()), "content" : content, "name" : name }
+
+                msg = "commented"
+                status = "success"
+
+            response = {"status": status, "msg": msg, "comment" : commentObj}
+            return self.write(json.dumps(response))
+
+        elif status == "deleteComment":
+
+            commentId = int(self.request.get("commentId"))
+            if blog and user:
+
+                comment = Comment.getComment(commentId)
+
+                if blog.created_by.key().id() != userId:
+                    msg = "otheruser"
+                    status = "error"
+                    response = {"status": status, "msg": msg}
+                    return self.write(json.dumps(response))
+
+                comment.delete()
+                blog.comments.remove(int(commentId))
+                blog.put()
+                msg = "uncommented"
+                status = "success"
+
+            response = {"status": status, "msg": msg}
+            return self.write(json.dumps(response))
 
 app = webapp2.WSGIApplication([("/", Home),
                                ("/newPost", NewPost),

@@ -10,8 +10,7 @@
             $(".like").click(function(e){
 
                 var el = $(e.currentTarget);
-                console.log(el.parents())
-                var blogParent = $(el).parents()[1];
+                var blogParent = $(el).parents()[2];
                 var blogId = $(blogParent).attr("id");
                 var data = { "blogId" : blogId };
 
@@ -22,17 +21,34 @@
                     dataType: 'json',
                     success: function(response){
 
-                        if (response.status == "success"){
+                        if(response.status == "success"){
 
-                            alert(response.msg);
+                            $(el).parent().next(".post-likes").find("span").text("" + response.count)
+                            var element = $(el).find("p");
+                            if (response.msg == "liked"){
+
+                                $(element).html("Liked");
+                            }
+                            else if (response.msg == "unliked"){
+
+                                $(element).html("Like")
+                            }
                         }
-                        else{
+                        else if(response.status == "error"){
 
-                            alert(response.msg);
+                            if(response.msg == "nouser"){
+
+                                alert("Please login to continue");
+                                window.location.href = "/login";
+                            }
+                            else if(response.msg == "selflike"){
+
+                                alert("You can't like your own post");
+                            }
                         }
                     },
                     error: function(response){
-                         alert("booo");
+                         alert("Something's Not Right");
                     }
                 });
             });
@@ -41,9 +57,9 @@
 
                 var el = e.currentTarget
                 var comment_val = $(el).val();
-                var blogParent = $(el).parents()[3];
+                var blogParent = $(el).parents()[4];
                 var blogId = $(blogParent).attr("id");
-                var data = { "blogId" : blogId, "comment" : comment_val };
+                var data = { "blogId" : blogId, "comment" : comment_val, "status" : "createComment" };
 
                 commentAjax = $.ajax({
                     type: 'POST',
@@ -52,18 +68,72 @@
                     dataType: 'json',
                     success: function(response){
 
-                        $(el).val() = "";
-                        if (response.status == "success"){
+                        $(el).val("");
+                        if(response.status == "success"){
 
-                            alert(response.msg);
+                            if(response.msg == "commented"){
+
+                                var html = "<div class='comment' id = '"+ (response.comment.id) +"' style = 'display: flex;'><p class='commentBy' style='justify-content: left; margin-right: 40px'>"+ (response.comment.name) +"</p><p class='commentContent' style='justify-content: left; margin-right: 40px'>"+ (response.comment.content) +"</p><i class='fa fa-times deleteComment' aria-hidden='true' style='margin: auto 0px;''></i></div>"
+
+                                var parent = $(el).parents()[2];
+                                var showCommentsEl = $(parent).find(".show-comments")
+                                $(showCommentsEl).prepend(html);
+                            }
                         }
-                        else{
+                        else if(response.status == "error"){
 
-                            alert(response.msg);
+                            if(response.msg == "nouser"){
+
+                                alert("Please login to continue");
+                                window.location.href = "/login";
+                            }
                         }
                     },
                     error: function(response){
-                         alert("booo");
+                         alert("Something's Not Right");
+                    }
+                });
+            });
+
+            $(".deleteComment").click(function(e){
+
+                var el = e.currentTarget;
+                var commentId = $(el).parent().attr("id");
+                var blogParent = $(el).parents()[4];
+                var blogId = $(blogParent).attr("id");
+                var data = { "commentId" : commentId, "status" : "deleteComment", "blogId" : blogId }
+
+                delComment = $.ajax({
+                    type: 'POST',
+                    url: "/commentBlog",
+                    data: data,
+                    dataType: 'json',
+                    success: function(response){
+
+                        $(el).val("");
+                        if(response.status == "success"){
+
+                            if(response.msg == "uncommented"){
+
+                                var parent = $(el).parent();
+                                $(parent).remove();
+                            }
+                        }
+                        else if(response.status == "error"){
+
+                            if(response.msg == "nouser"){
+
+                                alert("Please login to continue");
+                                window.location.href = "/login";
+                            }
+                            else if(response.msg == "otheruser"){
+
+                                alert("You can't delete other's reviews")
+                            }
+                        }
+                    },
+                    error: function(response){
+                         alert("Something's Not Right");
                     }
                 });
             });
