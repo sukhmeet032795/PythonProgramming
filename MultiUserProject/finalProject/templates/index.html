@@ -110,7 +110,6 @@
                     dataType: 'json',
                     success: function(response){
 
-                        $(el).val("");
                         if(response.status == "success"){
 
                             if(response.msg == "uncommented"){
@@ -134,6 +133,45 @@
                     },
                     error: function(response){
                          alert("Something's Not Right");
+                    }
+                });
+            });
+
+            $(".deletePost").click(function(e){
+
+                var el = e.currentTarget;
+                var blogId = $($(el).parents()[1]).attr("id");
+                var data = {"blogId" : blogId};
+
+                delBlog = $.ajax({
+                    type: 'POST',
+                    url: "/deleteBlog",
+                    data: data,
+                    dataType: 'json',
+                    success: function(response){
+
+                        if(response.status == "success"){
+
+                            if(response.msg == "blogDeleted"){
+
+                                $($(el).parents()[1]).remove();
+                            }
+                        }
+                        else if(response.status == "error"){
+
+                            if(response.msg == "nouser"){
+
+                                alert("Please login to continue");
+                                window.location.href = "/login";
+                            }
+                            else if(response.msg == "otheruser"){
+
+                                alert("You can't delete other's reviews")
+                            }
+                        }
+                    },
+                    error: function(response){
+                        alert("Something's Not Right");
                     }
                 });
             });

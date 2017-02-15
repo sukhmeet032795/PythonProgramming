@@ -1,12 +1,13 @@
 <div class="post" id="{{blog['id']}}" style="margin: 20px">
-    <div class="post-heading" style="display: flex; margin: 20px; justify-content: space-between;">
-        <div class="post-title">
+    <div class="post-heading" style="display: flex; margin: 20px;">
+        <div class="post-title" style="margin-right: 30px;">
             {{blog["title"]}}
         </div>
 
         <div class="post-date">
             {{blog["created"].strftime("%b %d, %Y")}}
         </div>
+        <i class="fa fa-angle-down deletePost" aria-hidden="true" style="margin-left: auto;"></i>
     </div>
 
     <div class="post-content" style="margin: 20px">
@@ -40,7 +41,7 @@
                     <div class="comment" id = "{{comment['id']}}" style = "display: flex;">
                         <p class="commentBy" style="justify-content: left; margin-right: 40px">{{comment["name"]}}</p>
                         <p class="commentContent" style="justify-content: left; margin-right: 40px">{{comment["content"]}}</p>
-                        <i class="fa fa-times deleteComment" aria-hidden="true" style="margin: auto 0px;"></i>
+                        <i class="fa fa-times deleteComment" aria-hidden="true" style="margin:auto 0px auto auto"></i>
                     </div>
                 {% endfor %}
             </div>

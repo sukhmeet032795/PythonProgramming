@@ -479,6 +479,40 @@ class commentBlog(BlogHandler):
             response = {"status": status, "msg": msg}
             return self.write(json.dumps(response))
 
+class deleteBlog(BlogHandler):
+
+    def post(self):
+        blogId = self.request.get("blogId")
+
+        blog = Blog.getBlog(blogId)
+        cookie_hash = self.get_cookie_hash("user")
+        user = None
+
+        if check_cookie_hash(cookie_hash):
+            userId = int(self.get_user_id(cookie_hash))
+            user = User.by_id(userId)
+
+        if not user:
+            msg = "nouser"
+            status = "error"
+            response = {"status": status, "msg": msg}
+            return self.write(json.dumps(response))
+
+        if blog and user:
+
+            if blog.created_by.key().id() != userId:
+                msg = "otheruser"
+                status = "error"
+                response = {"status": status, "msg": msg}
+                return self.write(json.dumps(response))
+
+            blog.delete()
+            msg = "blogDeleted"
+            status = "success"
+
+        response = {"status": status, "msg": msg}
+        return self.write(json.dumps(response))
+
 app = webapp2.WSGIApplication([("/", Home),
                                ("/newPost", NewPost),
                                ("/signup", Signup),
@@ -487,4 +521,5 @@ app = webapp2.WSGIApplication([("/", Home),
                                ("/blog/(\d+)", showBlog),
                                ("/likeBlog", likeBlog),
                                ("/commentBlog", commentBlog),
+                               ("/deleteBlog", deleteBlog),
                               ])
