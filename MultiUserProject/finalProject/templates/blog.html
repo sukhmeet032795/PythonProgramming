@@ -1,60 +1,8 @@
 {% extends "base.html" %}
 
 {% block header %}
-    <script type="text/javascript">
-
-        $(function() {
-
-            $(".post-review").css("display", "none");
-
-            $(".deletePost").click(function(e){
-
-                var el = e.currentTarget;
-                var blogId = $($(el).parents()[3]).attr("id");
-                var data = {"blogId" : blogId};
-
-                delBlog = $.ajax({
-                    type: 'POST',
-                    url: "/deleteBlog",
-                    data: data,
-                    dataType: 'json',
-                    success: function(response){
-
-                        if(response.status == "success"){
-
-                            if(response.msg == "blogDeleted"){
-
-                                $($(el).parents()[3]).remove();
-                            }
-                        }
-                        else if(response.status == "error"){
-
-                            if(response.msg == "nouser"){
-
-                                Materialize.toast("Please login to continue", 4000, 'rounded');
-                                window.location.href = "/login";
-                            }
-                            else if(response.msg == "otheruser"){
-
-                                Materialize.toast("You can't delete other's reviews", 4000, 'rounded');
-                            }
-                        }
-                    },
-                    error: function(response){
-
-                        Materialize.toast("Something's Not Right", 4000, 'rounded');
-                    }
-                });
-            });
-
-            $(".editPost").click(function(e){
-
-                var el = e.currentTarget;
-                var blogId = $($(el).parents()[3]).attr("id");
-                window.location.href = "/newPost/" + blogId;
-            });
-        });
-    </script>
+    <script type="text/javascript" src="../static/js/blog.js"></script>
+    <script type="text/javascript" src="../static/js/index.js"></script>
 {% endblock %}
 
 {% block content %}

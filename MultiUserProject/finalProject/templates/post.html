@@ -1,12 +1,12 @@
-<div class="post" id="{{blog.id}}" style="margin: 20px">
-    <div class="post-heading" style="display: flex; margin: 20px; justify-content: space-between;">
-        <div class="post-title" style="margin-right: 30px;">
+<div class="card post" id="{{blog.id}}">
+    <div class="post-heading card-content">
+        <div class="post-title card-title">
             {{blog.title}}
         </div>
 
         {% if blog.user == 1 %}
             <i class="fa fa-ellipsis-v dropdown-button" data-activates="dropdown_{{blog.id}}"></i>
-            <ul id="dropdown_{{blog.id}}" class="dropdown-content" style="width: inherit !important;">
+            <ul id="dropdown_{{blog.id}}" class="dropdown-content">
                 <li><span class="editPost">Edit Post</span></li>
                 <li class="divider"></li>
                 <li><span class="deletePost">Delete Post</span></li>
@@ -16,52 +16,55 @@
         {% endif %}
     </div>
 
-    <div class="post-date" style="margin: 20px;">
-        {{blog.created.strftime("%b %d, %Y")}}
-    </div>
-
-    <div class="post-content" style="margin: 20px">
+    <div class="card-content post-content">
         {{blog.render_text | safe}}
     </div>
 
-    <div class="post-review" style="margin: 20px;">
-        <div class="statusBar" style="display: flex; width: 10%; justify-content: space-between;">
-            <label style="display: flex; justify-content: space-between; margin-right: 30px;" class = "like">
-                <i class="fa fa-heart" aria-hidden="true" style="color: grey; margin-right: 10px;"></i>
+    <div class="post-review card-content">
+        <div class="statusBar">
+            <label class = "like">
+                <i class="fa fa-heart" aria-hidden="true"></i>
                 {% if blog.likeStatus == 0 %}
-                    <p style="margin: 0px;">Like</p>
+                    <p>Like</p>
                 {% else %}
-                    <p style="margin: 0px;">Liked</p>
+                    <p>Liked</p>
                 {% endif %}
             </label>
-            <label style="display: flex; justify-content: space-between; margin-right: 30px;" class = "comment">
-                <i class="fa fa-comment" aria-hidden="true" style="color: grey; margin-right: 10px;"></i>
-                <p style="margin: 0px;">Comment</p>
+            <label class = "comment">
+                <i class="fa fa-comment" aria-hidden="true"></i>
+                <p>Comment</p>
             </label>
         </div>
 
         <div class="post-likes">
             <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-            <span>{{ blog.likes | count }}</span> Likes
+            <span>{{ blog.likes | count }} Likes</span>
         </div>
 
         <div class="post-comments">
             <div class="show-comments">
                 {% for comment in blog.comments %}
-                    <div class="comment" id = "{{comment.id}}" style = "display: flex;">
-                        <p class="commentBy" style="justify-content: left; margin-right: 40px">{{comment.name}}</p>
-                        <p class="commentContent" style="justify-content: left; margin-right: 40px">{{comment.content}}</p>
+                    <div class="comment" id = "{{comment.id}}">
+                        <p class="commentBy">{{comment.name}}</p>
+                        <p class="commentContent">{{comment.content}}</p>
                         {% if blog.user == 1 or comment.userComment == 1 %}
-                            <i class="fa fa-times deleteComment" aria-hidden="true" style="margin:auto 0px auto auto"></i>
+                            <i class="fa fa-times deleteComment" aria-hidden="true"></i>
                         {% endif %}
                     </div>
                 {% endfor %}
             </div>
             <div class="write-comment">
-                <label>
-                    <input style="width: 100%; line-height: 30px; font-size: 16px;" type="text" name="comment" placeholder="Write a comment...">
-                </label>
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">mode_edit</i>
+                    <input id="icon_comment" type="text" class="validate" name="comment" placeholder="Write a comment...">
+                    <label for="icon_comment">Comment</label>
+                </div>
             </div>
         </div>
+    </div>
+    <hr>
+    <div class="card-content post-creator">
+        <span class="postCreatedBy">{{blog.name}}</span>
+        <span class="postCreatedOn">{{blog.created.strftime("%b %d, %Y")}}</span>
     </div>
 </div>

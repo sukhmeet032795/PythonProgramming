@@ -160,6 +160,23 @@ class User(db.Model):
                     email = email,
                     pw_hash = pw_hash)
 
+    @classmethod
+    def getUser(cls, userId):
+
+        name = ""
+        user = None
+        checkLoggedInUser = 0
+        if not userId:
+            return None
+
+        if userId:
+            checkLoggedInUser = 1
+            user = cls.by_id(userId)
+            name = user.firstname + " " + user.lastname
+
+        userObj = { "status" : checkLoggedInUser, "name" : name, "id" : userId }
+        return userObj
+
 class Signup(BlogHandler):
 
     def get(self):
@@ -292,16 +309,7 @@ class Home(BlogHandler):
 
         userId = self.getLoggedInUser()
 
-        name = ""
-        user = None
-        checkLoggedInUser = 0
-        if userId:
-            checkLoggedInUser = 1
-            user = User.by_id(userId)
-            name = user.firstname + " " + user.lastname
-
-        userObj = { "status" : checkLoggedInUser, "name" : name, "id" : userId }
-
+        userObj = User.getUser(userId)
         blogObjs = []
 
         for blog in allBlogs:
@@ -338,8 +346,11 @@ class Home(BlogHandler):
                     commentObj = { "id" : int(commentId), "content" : comment.content.encode("utf-8") , "name" : userName.encode("utf-8"), "userComment" : int(userComment) }
                     comments.append(commentObj)
 
+            bloguser = User.by_id(blog.created_by.key().id())
+            blogUserName = bloguser.firstname + " " + bloguser.lastname
+
             render_text = blog.subject.replace("\n", "<br>")
-            blogObj = { "title" : blog.title , "created" : blog.created, "id" : int(blog.key().id()), "comments" : comments, "likeStatus" : checkLike, "render_text" : render_text, "likes" : blog.likes, "user" : checkUser}
+            blogObj = { "title" : blog.title , "created" : blog.created, "id" : int(blog.key().id()), "comments" : comments, "likeStatus" : checkLike, "render_text" : render_text, "likes" : blog.likes, "user" : checkUser, "name" : blogUserName}
             blogObjs.append(blogObj)
 
         self.render("index.html", blogs = blogObjs, user = userObj)
@@ -348,20 +359,30 @@ class NewPost(BlogHandler):
 
     def get(self, blogId = None):
 
+        userId = self.getLoggedInUser()
+        userObj = User.getUser(userId)
+
+        if not userObj:
+            self.redirect("/login")
+
         if not blogId:
-            self.render("newBlog.html")
+            self.render("newBlog.html", user = userObj)
 
         else:
             blog = Blog.getBlog(int(blogId))
             print (blog)
-            p = { "id" : int(blogId), "title" : blog.title, "subject" : blog.subject}
+            p = { "id" : int(blogId), "title" : blog.title, "subject" : blog.subject, "user" : userObj}
             self.render("newBlog.html", **p)
 
     def post(self, blogId = None):
+
+        userId = self.getLoggedInUser()
+        userObj = User.getUser(userId)
+
         title = self.request.get("title")
         subject = self.request.get("subject")
 
-        p = { "id" : blogId, "title" : title, "subject" : subject }
+        p = { "id" : blogId, "title" : title, "subject" : subject, "user" : userObj }
         error = False
 
         if not title:
@@ -376,11 +397,8 @@ class NewPost(BlogHandler):
             return self.render("newBlog.html", **p)
         else:
 
-            cookie_hash = self.get_cookie_hash("user")
-            if not check_cookie_hash(cookie_hash):
+            if not userId:
                 return self.redirect("/login")
-            else:
-                userId = self.get_user_id(cookie_hash)
 
             user = User.by_id(userId)
 
@@ -399,11 +417,11 @@ class showBlog(BlogHandler):
     def get(self, blogId):
         blog = Blog.getBlog(blogId)
 
-        cookie_hash = self.get_cookie_hash("user")
-        userId = None
+        userId = self.getLoggedInUser()
+        userObj = User.getUser(userId)
 
-        if check_cookie_hash(cookie_hash):
-            userId = int(self.get_user_id(cookie_hash))
+        if not userObj:
+            self.redirect("/login")
 
         checkLike = 0
         checkUser = 0
@@ -437,10 +455,13 @@ class showBlog(BlogHandler):
                 commentObj = { "id" : int(commentId), "content" : comment.content.encode("utf-8") , "name" : userName.encode("utf-8"), "userComment" : int(userComment) }
                 comments.append(commentObj)
 
-        render_text = blog.subject.replace("\n", "<br>")
-        blogObj = { "title" : blog.title , "created" : blog.created, "id" : int(blog.key().id()), "comments" : comments, "likeStatus" : checkLike, "render_text" : render_text, "likes" : blog.likes, "user" : checkUser}
+        bloguser = User.by_id(blog.created_by.key().id())
+        blogUserName = bloguser.firstname + " " + bloguser.lastname
 
-        self.render("blog.html", blog = blogObj)
+        render_text = blog.subject.replace("\n", "<br>")
+        blogObj = { "title" : blog.title , "created" : blog.created, "id" : int(blog.key().id()), "comments" : comments, "likeStatus" : checkLike, "render_text" : render_text, "likes" : blog.likes, "user" : checkUser, "name" : blogUserName}
+
+        self.render("blog.html", blog = blogObj, user = userObj)
 
 class likeBlog(BlogHandler):
 

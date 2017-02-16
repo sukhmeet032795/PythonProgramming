@@ -85,8 +85,134 @@ header {
     margin-right: 0px;
 }
 
-.formLower button{
-
+.formLower button {
     background-color: #242424;
 }
 
+/***************************************/
+
+/************NewBlog***************/
+
+.formBlog {
+    width: 50%;
+    margin-left: 5%;
+    margin-top: 3%;
+}
+
+/***************************************/
+
+/************All blogs cards***************/
+
+.card {
+    width: 70%;
+    margin: 30px auto;
+}
+
+.post-heading {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 0px !important;
+}
+
+.post-heading .fa-ellipsis-v {
+    font-size: 22px;
+}
+
+.post-title {
+    margin-right: 30px;
+    font-weight: 400 !important;
+}
+
+.dropdown-content {
+    width: inherit !important;
+}
+
+.post-content {
+    font-size: 17px;
+}
+
+.post-review {
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+}
+
+.statusBar {
+    display: flex;
+    width: 10%;
+    justify-content: space-between;
+}
+
+.statusBar label {
+    display: flex;
+    justify-content: space-between;
+    margin-right: 30px;
+}
+
+.statusBar .fa-heart, .statusBar .fa-comment {
+    font-size: 16px;
+    margin: auto 7px;
+    color: #242424;
+}
+
+.statusBar p {
+    margin: 0px;
+    font-size: 16px;
+    color: #242424 !important;
+}
+
+.post-likes {
+    margin-top: 10px;
+}
+
+.post-likes .fa-thumbs-up {
+    font-size: 16px;
+    margin: auto 7px;
+}
+
+.post-likes span {
+    font-size: 16px;
+}
+
+.show-comments {
+    margin-top: 20px;
+}
+
+.show-comments .comment {
+    display: flex;
+    margin-bottom: 5px;
+}
+
+.show-comments .commentBy {
+    font-size: 17px;
+    font-weight: 500;
+    width: 20%;
+}
+
+.show-comments .commentContent {
+    font-size: 17px;
+    font-weight: 400;
+}
+
+.show-comments .deleteComment {
+    margin:auto 0px auto auto;
+}
+
+.write-comment {
+    margin-top: 40px;
+}
+
+.write-comment label {
+    width: 100%;
+    line-height: 30px;
+    font-size: 16px;
+}
+
+.post-creator {
+    display: flex;
+    justify-content: space-between;
+}
+
+.post-creator .postCreatedBy, .post-creator .postCreatedOn{
+    font-size: 20px;
+}
+/***************************************/
