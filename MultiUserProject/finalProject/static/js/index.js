@@ -31,8 +31,10 @@ $(function() {
 
                     if(response.msg == "nouser"){
 
-                        Materialize.toast("Please login to continue", 4000, 'rounded');
-                        window.location.href = "/login";
+                        Materialize.toast("Please login to continue", 2000, 'rounded');
+                        setTimeout(function() {
+                            window.location.href = "/login";
+                        }, 2000);
                     }
                     else if(response.msg == "selflike"){
 
@@ -88,8 +90,10 @@ $(function() {
 
                     if(response.msg == "nouser"){
 
-                        Materialize.toast("Please login to continue", 4000, 'rounded');
-                        window.location.href = "/login";
+                        Materialize.toast("Please login to continue", 2000, 'rounded');
+                        setTimeout(function() {
+                            window.location.href = "/login";
+                        }, 2000);
                     }
                 }
             },
@@ -128,8 +132,10 @@ $(function() {
 
                     if(response.msg == "nouser"){
 
-                        Materialize.toast("Please login to continue", 4000, 'rounded');
-                        window.location.href = "/login";
+                        Materialize.toast("Please login to continue", 2000, 'rounded');
+                        setTimeout(function() {
+                            window.location.href = "/login";
+                        }, 2000);
                     }
                     else if(response.msg == "otheruser"){
 
@@ -168,8 +174,10 @@ $(function() {
 
                     if(response.msg == "nouser"){
 
-                        Materialize.toast("Please login to continue", 4000, 'rounded');
-                        window.location.href = "/login";
+                        Materialize.toast("Please login to continue", 2000, 'rounded');
+                        setTimeout(function() {
+                            window.location.href = "/login";
+                        }, 2000);
                     }
                     else if(response.msg == "otheruser"){
 

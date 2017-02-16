@@ -29,4 +29,40 @@ $(function(){
 
         window.location.href = "/logout";
     });
+
+    //Adding a new blog
+
+    $("#addBlog").click(function(e){
+
+        checkUserAjax = $.ajax({
+            type: 'GET',
+            url: "/checkUser",
+            dataType: 'json',
+            success: function(response){
+
+                if(response.status == "success"){
+
+                    if(response.msg == "user"){
+
+                        window.location.href = "/newPost";
+                    }
+                }
+                else if(response.status == "error"){
+
+                    if(response.msg == "nouser"){
+
+                        Materialize.toast("Please login to continue", 1000, 'rounded');
+                        setTimeout(function() {
+                            window.location.href = "/login";
+                        }, 1000);
+
+                    }
+                }
+            },
+            error: function(response){
+
+                Materialize.toast("Something's Not Right", 4000, 'rounded');
+            }
+        });
+    });
 });

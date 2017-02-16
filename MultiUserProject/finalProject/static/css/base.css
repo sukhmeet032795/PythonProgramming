@@ -59,6 +59,15 @@ header {
     font-size: 22px;
 }
 
+#addBlog {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}
+
+#addBlog i{
+    background-color: #3B5998;
+}
 /***************************************/
 
 /************Signup and Login***************/

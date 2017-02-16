@@ -177,6 +177,25 @@ class User(db.Model):
         userObj = { "status" : checkLoggedInUser, "name" : name, "id" : userId }
         return userObj
 
+class checkUser(BlogHandler):
+
+    def get(self):
+
+        userId = self.getLoggedInUser()
+        userObj = User.getUser(userId)
+
+        if not userObj:
+            msg = "nouser"
+            status = "error"
+            response = {"status": status, "msg": msg}
+            return self.write(json.dumps(response))
+
+        else:
+            msg = "user"
+            status = "success"
+            response = {"status": status, "msg": msg}
+            return self.write(json.dumps(response))
+
 class Signup(BlogHandler):
 
     def get(self):
@@ -266,7 +285,7 @@ class Login(BlogHandler):
                 return self.render("login.html", **p)
             else:
                 self.login("user", user.key().id())
-                self.redirect("/newPost")
+                self.redirect("/wall")
 
 class Logout(BlogHandler):
 
@@ -348,6 +367,52 @@ class Home(BlogHandler):
 
             bloguser = User.by_id(blog.created_by.key().id())
             blogUserName = bloguser.firstname + " " + bloguser.lastname
+
+            render_text = blog.subject.replace("\n", "<br>")
+            blogObj = { "title" : blog.title , "created" : blog.created, "id" : int(blog.key().id()), "comments" : comments, "likeStatus" : checkLike, "render_text" : render_text, "likes" : blog.likes, "user" : checkUser, "name" : blogUserName}
+            blogObjs.append(blogObj)
+
+        self.render("index.html", blogs = blogObjs, user = userObj)
+
+class UserWall(BlogHandler):
+
+    def get(self):
+        userId = self.getLoggedInUser()
+
+        userObj = User.getUser(userId)
+        blogObjs = []
+
+        if not userObj:
+            return self.redirect("/login")
+
+        user = User.by_id(userId)
+        allBlogs = Blog.all().filter("created_by", user.key())
+
+        for blog in allBlogs:
+
+            checkLike = 0
+            checkUser = 1
+
+            comments = []
+
+            allComments = blog.comments
+            if (len(allComments) != 0):
+                allComments.reverse()
+                for commentId in allComments:
+                    comment = Comment.getComment(commentId)
+                    commentUser = User.by_id(comment.created_by.key().id())
+                    userName = commentUser.firstname + " " + commentUser.lastname
+
+                    userComment = 0
+
+                    if user:
+                        if commentUser.key().id() == user.key().id():
+                            userComment = 1
+
+                    commentObj = { "id" : int(commentId), "content" : comment.content.encode("utf-8") , "name" : userName.encode("utf-8"), "userComment" : int(userComment) }
+                    comments.append(commentObj)
+
+            blogUserName = user.firstname + " " + user.lastname
 
             render_text = blog.subject.replace("\n", "<br>")
             blogObj = { "title" : blog.title , "created" : blog.created, "id" : int(blog.key().id()), "comments" : comments, "likeStatus" : checkLike, "render_text" : render_text, "likes" : blog.likes, "user" : checkUser, "name" : blogUserName}
@@ -599,6 +664,11 @@ class deleteBlog(BlogHandler):
                 response = {"status": status, "msg": msg}
                 return self.write(json.dumps(response))
 
+            comments = blog.comments
+            for comment in comments:
+                commentObj = Comment.getComment(int(comment))
+                commentObj.delete()
+
             blog.delete()
             msg = "blogDeleted"
             status = "success"
@@ -607,6 +677,7 @@ class deleteBlog(BlogHandler):
         return self.write(json.dumps(response))
 
 app = webapp2.WSGIApplication([("/", Home),
+                               ("/wall", UserWall),
                                ("/newPost", NewPost),
                                ("/newPost/(\d+)", NewPost),
                                ("/signup", Signup),
@@ -616,4 +687,5 @@ app = webapp2.WSGIApplication([("/", Home),
                                ("/likeBlog", likeBlog),
                                ("/commentBlog", commentBlog),
                                ("/deleteBlog", deleteBlog),
+                               ("/checkUser", checkUser),
                               ])
