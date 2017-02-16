@@ -1,9 +1,6 @@
 {% extends "base.html" %}
 
 {% block header %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://use.fontawesome.com/329b68c3d5.js"></script>
-
     <script type="text/javascript">
 
         $(function() {
@@ -38,19 +35,27 @@
 
                             if(response.msg == "nouser"){
 
-                                alert("Please login to continue");
+                                Materialize.toast("Please login to continue", 4000, 'rounded');
                                 window.location.href = "/login";
                             }
                             else if(response.msg == "selflike"){
 
-                                alert("You can't like your own post");
+                                Materialize.toast("You can't like your own post", 4000, 'rounded');
                             }
                         }
                     },
                     error: function(response){
-                         alert("Something's Not Right");
+
+                        Materialize.toast("Something's Not Right", 4000, 'rounded');
                     }
                 });
+            });
+
+            $("input[name='comment']").keypress(function(e){
+
+                if(e.keyCode == 13){
+                    $(this).focusout();
+                }
             });
 
             $("input[name='comment']").on("focusout", function(e){
@@ -60,6 +65,9 @@
                 var blogParent = $(el).parents()[4];
                 var blogId = $(blogParent).attr("id");
                 var data = { "blogId" : blogId, "comment" : comment_val, "status" : "createComment" };
+
+                if (comment_val == "")
+                    return
 
                 commentAjax = $.ajax({
                     type: 'POST',
@@ -73,10 +81,10 @@
 
                             if(response.msg == "commented"){
 
-                                var html = "<div class='comment' id = '"+ (response.comment.id) +"' style = 'display: flex;'><p class='commentBy' style='justify-content: left; margin-right: 40px'>"+ (response.comment.name) +"</p><p class='commentContent' style='justify-content: left; margin-right: 40px'>"+ (response.comment.content) +"</p><i class='fa fa-times deleteComment' aria-hidden='true' style='margin: auto 0px;''></i></div>"
+                                var html = "<div class='comment' id = '" + (response.comment.id) + "' style = 'display: flex;'><p class='commentBy' style='justify-content: left; margin-right: 40px'>"+ (response.comment.name) +"</p><p class='commentContent' style='justify-content: left; margin-right: 40px'>"+ (response.comment.content) +"</p><i class='fa fa-times deleteComment' aria-hidden='true' style='margin:auto 0px auto auto'></i></div>"
 
                                 var parent = $(el).parents()[2];
-                                var showCommentsEl = $(parent).find(".show-comments")
+                                var showCommentsEl = $(parent).find(".show-comments");
                                 $(showCommentsEl).prepend(html);
                             }
                         }
@@ -84,13 +92,14 @@
 
                             if(response.msg == "nouser"){
 
-                                alert("Please login to continue");
+                                Materialize.toast("Please login to continue", 4000, 'rounded');
                                 window.location.href = "/login";
                             }
                         }
                     },
                     error: function(response){
-                         alert("Something's Not Right");
+
+                        Materialize.toast("Something's Not Right", 4000, 'rounded');
                     }
                 });
             });
@@ -122,17 +131,18 @@
 
                             if(response.msg == "nouser"){
 
-                                alert("Please login to continue");
+                                Materialize.toast("Please login to continue", 4000, 'rounded');
                                 window.location.href = "/login";
                             }
                             else if(response.msg == "otheruser"){
 
-                                alert("You can't delete other's reviews")
+                                Materialize.toast("You can't delete other's reviews", 4000, 'rounded');
                             }
                         }
                     },
                     error: function(response){
-                         alert("Something's Not Right");
+
+                        Materialize.toast("Something's Not Right", 4000, 'rounded');
                     }
                 });
             });
@@ -140,7 +150,7 @@
             $(".deletePost").click(function(e){
 
                 var el = e.currentTarget;
-                var blogId = $($(el).parents()[1]).attr("id");
+                var blogId = $($(el).parents()[3]).attr("id");
                 var data = {"blogId" : blogId};
 
                 delBlog = $.ajax({
@@ -154,26 +164,34 @@
 
                             if(response.msg == "blogDeleted"){
 
-                                $($(el).parents()[1]).remove();
+                                $($(el).parents()[3]).remove();
                             }
                         }
                         else if(response.status == "error"){
 
                             if(response.msg == "nouser"){
 
-                                alert("Please login to continue");
+                                Materialize.toast("Please login to continue", 4000, 'rounded');
                                 window.location.href = "/login";
                             }
                             else if(response.msg == "otheruser"){
 
-                                alert("You can't delete other's reviews")
+                                Materialize.toast("You can't delete other's reviews", 4000, 'rounded');
                             }
                         }
                     },
                     error: function(response){
-                        alert("Something's Not Right");
+
+                        Materialize.toast("Something's Not Right", 4000, 'rounded');
                     }
                 });
+            });
+
+            $(".editPost").click(function(e){
+
+                var el = e.currentTarget;
+                var blogId = $($(el).parents()[3]).attr("id");
+                window.location.href = "/newPost/" + blogId;
             });
         });
     </script>

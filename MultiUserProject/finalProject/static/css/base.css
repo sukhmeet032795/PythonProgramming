@@ -1,0 +1,92 @@
+/*************General Css***************/
+
+header {
+    display: flex;
+    justify-content: space-between;
+    margin: auto;
+    background-color: #3B5998;
+    height: 80px;
+}
+
+.headerImage {
+    margin-left: 42px;
+    display: flex;
+    align-items: center;
+}
+
+.headerImage img {
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+}
+
+.headerContent {
+    display: flex;
+}
+
+.headerContent span {
+    font-size: 20px;
+    color: #fff;
+    margin: auto 20px;
+}
+
+.headerContent .fa-angle-down {
+    margin: auto 20px auto 0px;
+    font-size: 22px;
+    color: #fff;
+}
+
+
+#loginLabel {
+    font-size: 20px;
+    color: #fff;
+    margin: auto 20px;
+}
+
+.fa-sign-in:before {
+    content: "\f090";
+    font-size: 22px;
+}
+
+#signupLabel {
+    font-size: 20px;
+    color: white;
+    margin: auto 40px auto 20px;
+}
+
+.fa-user-plus:before {
+    content: "\f234";
+    font-size: 22px;
+}
+
+/***************************************/
+
+/************Signup and Login***************/
+
+.formcontainer {
+    width: 40%;
+    margin-left: 5%;
+    margin-top: 3%;
+}
+
+.formLower {
+    display: flex;
+    justify-content: space-between;
+}
+
+.formLower #loginLabel {
+    color: #242424;
+    font-size: 18px;
+}
+
+.formLower #signupLabel {
+    color: #242424;
+    font-size: 18px;
+    margin-right: 0px;
+}
+
+.formLower button{
+
+    background-color: #242424;
+}
+

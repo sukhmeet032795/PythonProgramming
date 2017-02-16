@@ -2,6 +2,7 @@
 
 {% block content %}
     <form method = "POST">
+        <input type="hidden" name="id" readonly="true" value="{{id}}">
         <label>
             <span>Title</span>
             <input type="text" name="title" value="{{title}}">

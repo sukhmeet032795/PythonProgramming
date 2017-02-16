@@ -1,17 +1,27 @@
-<div class="post" id="{{blog['id']}}" style="margin: 20px">
-    <div class="post-heading" style="display: flex; margin: 20px;">
+<div class="post" id="{{blog.id}}" style="margin: 20px">
+    <div class="post-heading" style="display: flex; margin: 20px; justify-content: space-between;">
         <div class="post-title" style="margin-right: 30px;">
-            {{blog["title"]}}
+            {{blog.title}}
         </div>
 
-        <div class="post-date">
-            {{blog["created"].strftime("%b %d, %Y")}}
-        </div>
-        <i class="fa fa-angle-down deletePost" aria-hidden="true" style="margin-left: auto;"></i>
+        {% if blog.user == 1 %}
+            <i class="fa fa-ellipsis-v dropdown-button" data-activates="dropdown_{{blog.id}}"></i>
+            <ul id="dropdown_{{blog.id}}" class="dropdown-content" style="width: inherit !important;">
+                <li><span class="editPost">Edit Post</span></li>
+                <li class="divider"></li>
+                <li><span class="deletePost">Delete Post</span></li>
+                <li class="divider"></li>
+                <li><span class="savePost">Save Post</span></li>
+            </ul>
+        {% endif %}
+    </div>
+
+    <div class="post-date" style="margin: 20px;">
+        {{blog.created.strftime("%b %d, %Y")}}
     </div>
 
     <div class="post-content" style="margin: 20px">
-        {{blog["render_text"] | safe}}
+        {{blog.render_text | safe}}
     </div>
 
     <div class="post-review" style="margin: 20px;">
@@ -32,16 +42,18 @@
 
         <div class="post-likes">
             <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-            <span>{{ blog["likes"] | count }}</span> Likes
+            <span>{{ blog.likes | count }}</span> Likes
         </div>
 
         <div class="post-comments">
             <div class="show-comments">
-                {% for comment in blog["comments"] %}
-                    <div class="comment" id = "{{comment['id']}}" style = "display: flex;">
-                        <p class="commentBy" style="justify-content: left; margin-right: 40px">{{comment["name"]}}</p>
-                        <p class="commentContent" style="justify-content: left; margin-right: 40px">{{comment["content"]}}</p>
-                        <i class="fa fa-times deleteComment" aria-hidden="true" style="margin:auto 0px auto auto"></i>
+                {% for comment in blog.comments %}
+                    <div class="comment" id = "{{comment.id}}" style = "display: flex;">
+                        <p class="commentBy" style="justify-content: left; margin-right: 40px">{{comment.name}}</p>
+                        <p class="commentContent" style="justify-content: left; margin-right: 40px">{{comment.content}}</p>
+                        {% if blog.user == 1 or comment.userComment == 1 %}
+                            <i class="fa fa-times deleteComment" aria-hidden="true" style="margin:auto 0px auto auto"></i>
+                        {% endif %}
                     </div>
                 {% endfor %}
             </div>

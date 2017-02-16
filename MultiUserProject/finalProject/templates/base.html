@@ -2,12 +2,40 @@
 <html>
 <head>
     <title></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/base.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="../static/js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+    <script src="https://use.fontawesome.com/329b68c3d5.js"></script>
     {% block header %}
     {% endblock %}
 </head>
 <body>
     <header>
-
+        <div class="headerImage">
+            <img src="../static/images/blog.jpg" width="80px" height="80px"/>
+        </div>
+        <div class="headerContent">
+            {% if user.status == 1 %}
+                <span>{{ user.name }}</span>
+                <i class="fa fa-angle-down dropdown-button" data-activates="user_dropdown"></i>
+                <ul id="user_dropdown" class="dropdown-content" style="width: inherit !important;">
+                    <li><span class="myWall">My Wall</span></li>
+                    <li class="divider"></li>
+                    <li><span class="logout">Logout</span></li>
+                </ul>
+            {% else %}
+                <label id="loginLabel">
+                    <i class="fa fa-sign-in" aria-hidden="true"></i>
+                    <span>Login</span>
+                </label>
+                <label id="signupLabel">
+                    <i class="fa fa-user-plus" aria-hidden="true"></i>
+                    <span>Signup</span>
+                </label>
+            {% endif %}
+        </div>
     </header>
     {% block content %}
     {% endblock %}

@@ -95,6 +95,20 @@ class BlogHandler(webapp2.RequestHandler):
     def get_user_id(self, hash):
         return hash.split("|")[0]
 
+    def getLoggedInUser(self):
+
+        cookie_hash = self.get_cookie_hash("user")
+        userId = None
+
+        if check_cookie_hash(cookie_hash):
+            userId = int(self.get_user_id(cookie_hash))
+
+        if not userId:
+            return None
+        else:
+            return userId
+
+
 ###########Main Handler Ends###########
 
 
@@ -276,18 +290,34 @@ class Home(BlogHandler):
     def get(self):
         allBlogs = Blog.all().order("-created")
 
-        cookie_hash = self.get_cookie_hash("user")
-        userId = None
+        userId = self.getLoggedInUser()
 
-        if check_cookie_hash(cookie_hash):
-            userId = self.get_user_id(cookie_hash)
+        name = ""
+        user = None
+        checkLoggedInUser = 0
+        if userId:
+            checkLoggedInUser = 1
+            user = User.by_id(userId)
+            name = user.firstname + " " + user.lastname
+
+        userObj = { "status" : checkLoggedInUser, "name" : name, "id" : userId }
+
         blogObjs = []
 
         for blog in allBlogs:
 
-            check = 0
-            if userId in blog.likes:
-                check = 1
+            checkLike = 0
+            checkUser = 0
+            user = None
+
+            if userId:
+                user = User.by_id(userId)
+
+                if int(userId) in blog.likes:
+                    checkLike = 1
+
+                if blog.created_by.key().id() == user.key().id():
+                    checkUser = 1
 
             comments = []
 
@@ -296,27 +326,42 @@ class Home(BlogHandler):
                 allComments.reverse()
                 for commentId in allComments:
                     comment = Comment.getComment(commentId)
-                    user = User.by_id(comment.created_by.key().id())
-                    userName = user.firstname + " " + user.lastname
-                    commentObj = { "id" : int(commentId), "content" : comment.content.encode("utf-8") , "name" : userName.encode("utf-8") }
+                    commentUser = User.by_id(comment.created_by.key().id())
+                    userName = commentUser.firstname + " " + commentUser.lastname
+
+                    userComment = 0
+
+                    if user:
+                        if commentUser.key().id() == user.key().id():
+                            userComment = 1
+
+                    commentObj = { "id" : int(commentId), "content" : comment.content.encode("utf-8") , "name" : userName.encode("utf-8"), "userComment" : int(userComment) }
                     comments.append(commentObj)
 
             render_text = blog.subject.replace("\n", "<br>")
-            blogObj = { "title" : blog.title , "created" : blog.created, "id" : int(blog.key().id()), "comments" : comments, "likeStatus" : check, "render_text" : render_text, "likes" : blog.likes}
+            blogObj = { "title" : blog.title , "created" : blog.created, "id" : int(blog.key().id()), "comments" : comments, "likeStatus" : checkLike, "render_text" : render_text, "likes" : blog.likes, "user" : checkUser}
             blogObjs.append(blogObj)
 
-        self.render("index.html", blogs = blogObjs)
+        self.render("index.html", blogs = blogObjs, user = userObj)
 
 class NewPost(BlogHandler):
 
-    def get(self):
-        self.render("newBlog.html")
+    def get(self, blogId = None):
 
-    def post(self):
+        if not blogId:
+            self.render("newBlog.html")
+
+        else:
+            blog = Blog.getBlog(int(blogId))
+            print (blog)
+            p = { "id" : int(blogId), "title" : blog.title, "subject" : blog.subject}
+            self.render("newBlog.html", **p)
+
+    def post(self, blogId = None):
         title = self.request.get("title")
         subject = self.request.get("subject")
 
-        p = { "title" : title , "subject" : subject }
+        p = { "id" : blogId, "title" : title, "subject" : subject }
         error = False
 
         if not title:
@@ -338,7 +383,13 @@ class NewPost(BlogHandler):
                 userId = self.get_user_id(cookie_hash)
 
             user = User.by_id(userId)
-            blog = Blog(title = title, subject = subject, created_by = user)
+
+            if not blogId:
+                blog = Blog(title = title, subject = subject, created_by = user)
+            else:
+                blog = Blog.getBlog(int(blogId))
+                blog.title = title
+                blog.subject = subject
             blog.put()
 
             return self.redirect("/blog/" + str(blog.key().id()))
@@ -352,24 +403,43 @@ class showBlog(BlogHandler):
         userId = None
 
         if check_cookie_hash(cookie_hash):
-            userId = self.get_user_id(cookie_hash)
+            userId = int(self.get_user_id(cookie_hash))
 
-        check = 0
-        if userId in blog.likes:
-            check = 1
+        checkLike = 0
+        checkUser = 0
+        user = None
+
+        if userId:
+            user = User.by_id(userId)
+
+            if int(userId) in blog.likes:
+                checkLike = 1
+
+            if blog.created_by.key().id() == user.key().id():
+                checkUser = 1
 
         comments = []
 
-        for commentId in blog.comments:
-            comment = Comment.getComment(commentId)
-            user = User.by_id(comment.created_by.key().id())
-            userName = user.firstname + " " + user.lastname
-            commentObj = { "id" : int(commentId) , "content" : comment.content.encode("utf-8") , "name" : userName.encode("utf-8") }
-            comments.append(commentObj)
+        allComments = blog.comments
+        if (len(allComments) != 0):
+            allComments.reverse()
+            for commentId in allComments:
+                comment = Comment.getComment(commentId)
+                commentUser = User.by_id(comment.created_by.key().id())
+                userName = commentUser.firstname + " " + commentUser.lastname
+
+                userComment = 0
+
+                if user:
+                    if commentUser.key().id() == user.key().id():
+                        userComment = 1
+
+                commentObj = { "id" : int(commentId), "content" : comment.content.encode("utf-8") , "name" : userName.encode("utf-8"), "userComment" : int(userComment) }
+                comments.append(commentObj)
 
         render_text = blog.subject.replace("\n", "<br>")
-        blogObj = { "title" : blog.title , "created" : blog.created, "id" : int(blog.key().id()), "comments" : comments, "likeStatus" : check, "render_text" : render_text, "likes" : blog.likes}
-        print (blogObj)
+        blogObj = { "title" : blog.title , "created" : blog.created, "id" : int(blog.key().id()), "comments" : comments, "likeStatus" : checkLike, "render_text" : render_text, "likes" : blog.likes, "user" : checkUser}
+
         self.render("blog.html", blog = blogObj)
 
 class likeBlog(BlogHandler):
@@ -464,7 +534,9 @@ class commentBlog(BlogHandler):
 
                 comment = Comment.getComment(commentId)
 
-                if blog.created_by.key().id() != userId:
+                checkUserComment = ((blog.created_by.key().id() == userId) or (comment.created_by.key().id() == userId))
+
+                if not checkUserComment:
                     msg = "otheruser"
                     status = "error"
                     response = {"status": status, "msg": msg}
@@ -515,6 +587,7 @@ class deleteBlog(BlogHandler):
 
 app = webapp2.WSGIApplication([("/", Home),
                                ("/newPost", NewPost),
+                               ("/newPost/(\d+)", NewPost),
                                ("/signup", Signup),
                                ("/login", Login),
                                ("/logout", Logout),
