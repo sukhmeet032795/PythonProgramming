@@ -10,14 +10,12 @@
                 <li><span class="editPost">Edit Post</span></li>
                 <li class="divider"></li>
                 <li><span class="deletePost">Delete Post</span></li>
-                <li class="divider"></li>
-                <li><span class="savePost">Save Post</span></li>
             </ul>
         {% endif %}
     </div>
 
     <div class="card-content post-content">
-        {{blog.render_text | safe}}
+        {{blog.render_text | escape}}
     </div>
 
     <div class="post-review card-content">

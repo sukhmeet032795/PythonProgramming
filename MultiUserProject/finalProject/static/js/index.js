@@ -16,7 +16,7 @@ $(function() {
 
                 if(response.status == "success"){
 
-                    $(el).parent().next(".post-likes").find("span").text("" + response.count)
+                    $(el).parent().next(".post-likes").find("span").text("" + response.count + " Likes")
                     var element = $(el).find("p");
                     if (response.msg == "liked"){
 

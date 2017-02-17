@@ -30,6 +30,18 @@ $(function(){
         window.location.href = "/logout";
     });
 
+    //Redirect to my wall handler
+
+    $(".myWall").click(function(e){
+
+        window.location.href = "/wall";
+    });
+
+    $(".home").click(function(e){
+
+        window.location.href = "/";
+    });
+
     //Adding a new blog
 
     $("#addBlog").click(function(e){
