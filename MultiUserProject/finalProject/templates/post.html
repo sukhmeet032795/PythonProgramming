@@ -43,9 +43,18 @@
             <div class="show-comments">
                 {% for comment in blog.comments %}
                     <div class="comment" id = "{{comment.id}}">
-                        <p class="commentBy">{{comment.name}}</p>
-                        <p class="commentContent">{{comment.content}}</p>
-                        {% if blog.user == 1 or comment.userComment == 1 %}
+                        <div class="comment-content">
+                            <div class="commentBy">{{comment.name}}</div>
+                            <div class="commentContent">{{comment.content}}</div>
+                        </div>
+                        {% if comment.userComment == 1 %}
+                            <i class="material-icons dropdown-button" data-activates="drop_{{comment.id}}">mode_edit</i>
+                            <ul id="drop_{{comment.id}}" class="dropdown-content">
+                                <li><span class="modal-trigger editComment">Edit Comment</span></li>
+                                <li class="divider"></li>
+                                <li><span class="deleteCommentDropdown">Delete Comment</span></li>
+                            </ul>
+                        {% elif blog.user == 1 %}
                             <i class="fa fa-times deleteComment" aria-hidden="true"></i>
                         {% endif %}
                     </div>

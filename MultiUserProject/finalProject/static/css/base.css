@@ -108,6 +108,18 @@ header {
     margin-top: 3%;
 }
 
+.formBlog .formLower {
+    justify-content: center;
+}
+
+.formBlog .formLower button {
+    margin-right: 20px;
+}
+
+.formLower a {
+    background-color: #242424;
+}
+
 /***************************************/
 
 /************All blogs cards***************/
@@ -188,22 +200,29 @@ header {
 
 .show-comments .comment {
     display: flex;
+    justify-content: space-between;
     margin-bottom: 5px;
+}
+
+.show-comments .comment-content {
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
 }
 
 .show-comments .commentBy {
     font-size: 17px;
     font-weight: 500;
-    width: 20%;
+    width: 24%;
 }
 
 .show-comments .commentContent {
     font-size: 17px;
     font-weight: 400;
+    width: 75%;
 }
 
-.show-comments .deleteComment {
-    margin:auto 0px auto auto;
+.show-comments i {
 }
 
 .write-comment {

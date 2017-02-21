@@ -576,8 +576,22 @@ class likeBlog(BlogHandler):
 class commentBlog(BlogHandler):
 
     def post(self):
-        blogId = self.request.get("blogId")
         status = self.request.get("status")
+
+        if status == "updateComment":
+            id = self.request.get("id")
+            content = self.request.get("content")
+
+            comment = Comment.getComment(int(id))
+            comment.content = content
+            comment.put()
+
+            msg = "updated"
+            status = "success"
+            response = {"status": status, "msg": msg}
+            return self.write(json.dumps(response))
+
+        blogId = self.request.get("blogId")
 
         blog = Blog.getBlog(blogId)
         cookie_hash = self.get_cookie_hash("user")
