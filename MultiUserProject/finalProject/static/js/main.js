@@ -42,6 +42,11 @@ $(function(){
         window.location.href = "/";
     });
 
+    $("#homeLabel").click(function(e){
+
+        window.location.href = "/";
+    });
+
     //Adding a new blog
 
     $("#addBlog").click(function(e){

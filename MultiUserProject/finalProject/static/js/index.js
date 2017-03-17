@@ -244,7 +244,7 @@ $(function() {
 
         var el = e.currentTarget;
         var blogId = $($(el).parents()[3]).attr("id");
-        window.location.href = "/newPost/" + blogId;
+        window.location.href = "/editBlog/" + blogId;
     });
 
     $(".show-comments").on("click", ".editComment", function(e){
