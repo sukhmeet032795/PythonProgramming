@@ -13,7 +13,7 @@ jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir),
 class BaseHandler(webapp2.RequestHandler):
 
     def write(self, *a, **kw):
-        self.response.headers["Content Type"] = "text/html"
+        self.request.headers["content-Type"] = 'text/plain;charset=utf-8'
         self.response.out.write(*a, **kw)
 
     def render_str(self, template, **params):

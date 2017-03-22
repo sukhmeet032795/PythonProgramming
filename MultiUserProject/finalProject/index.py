@@ -64,13 +64,13 @@ class Home(BaseHandler):
                         if commentUser.key().id() == user.key().id():
                             userComment = 1
 
-                    commentObj = { "id" : int(commentId), "content" : comment.content.encode("utf-8") , "name" : userName.encode("utf-8"), "userComment" : int(userComment) }
+                    commentObj = { "id" : int(commentId), "content" : comment.content.encode('utf-8') , "name" : userName.encode('utf-8'), "userComment" : int(userComment) }
                     comments.append(commentObj)
 
             bloguser = User.by_id(blog.created_by.key().id())
             blogUserName = bloguser.firstname + " " + bloguser.lastname
 
-            render_text = blog.subject.replace("\n", "<br>")
+            render_text = blog.subject.replace('\n', '<br>')
             blogObj = { "title" : blog.title , "created" : blog.created, "id" : int(blog.key().id()), "comments" : comments, "likeStatus" : checkLike, "render_text" : render_text, "likes" : blog.likes, "user" : checkUser, "name" : blogUserName}
             blogObjs.append(blogObj)
 

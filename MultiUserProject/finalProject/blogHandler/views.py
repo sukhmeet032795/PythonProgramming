@@ -5,25 +5,28 @@ from userHandler.models import User
 from blogHandler.models import *
 from loginHandler.views import *
 from baseHandler.views import *
+from userHandler.views import *
 
 # Creating a new Blog Entry
 class NewPost(BaseHandler):
 
-    def get(self):
+    @loginRequired
+    def get(self, userId, user_logged_in):
 
-        userId = self.getLoggedInUser()
-        userObj = User.getUser(userId)
-
-        if not userObj:
+        if not user_logged_in:
             self.redirect("/login")
 
+        userObj = User.getUser(int(userId))
         p = { "user" : userObj}
         self.render("newBlog.html", **p)
 
-    def post(self):
+    @loginRequired
+    def post(self, userId, user_logged_in):
 
-        userId = self.getLoggedInUser()
-        userObj = User.getUser(userId)
+        if not user_logged_in:
+            self.redirect("/login")
+
+        userObj = User.getUser(int(userId))
 
         title = self.request.get("title")
         subject = self.request.get("subject")
@@ -43,10 +46,7 @@ class NewPost(BaseHandler):
             return self.render("newBlog.html", **p)
         else:
 
-            if not userId:
-                return self.redirect("/login")
-
-            user = User.by_id(userId)
+            user = User.by_id(int(userId))
 
             blog = Blog(title = title, subject = subject, created_by = user)
             blog.put()
@@ -56,26 +56,28 @@ class NewPost(BaseHandler):
 # Editing a Blog Entry
 class editBlog(BaseHandler):
 
-    def get(self, blogId = None):
+    @loginRequired
+    def get(self, blogId = None, userId = None, user_logged_in = None):
 
-        userId = self.getLoggedInUser()
-        userObj = User.getUser(userId)
-
-        if not userObj:
+        if not user_logged_in:
             self.redirect("/login")
+
+        userObj = User.getUser(userId)
 
         if not blogId:
             self.render("newBlog.html", user = userObj)
 
         else:
             blog = Blog.getBlog(int(blogId))
-            print (blog)
             p = { "id" : int(blogId), "title" : blog.title, "subject" : blog.subject, "user" : userObj}
             self.render("newBlog.html", **p)
 
-    def post(self, blogId = None):
+    @loginRequired
+    def post(self, blogId = None, userId = None, user_logged_in = None):
 
-        userId = self.getLoggedInUser()
+        if not user_logged_in:
+            self.redirect("/login")
+
         userObj = User.getUser(userId)
 
         title = self.request.get("title")
@@ -96,10 +98,7 @@ class editBlog(BaseHandler):
             return self.render("newBlog.html", **p)
         else:
 
-            if not userId:
-                return self.redirect("/login")
-
-            user = User.by_id(userId)
+            user = User.by_id(int(userId))
 
             if not blogId:
                 blog = Blog(title = title, subject = subject, created_by = user)
@@ -114,30 +113,27 @@ class editBlog(BaseHandler):
 # Showing Blogs
 class showBlog(BaseHandler):
 
-    def get(self, blogId):
-        blog = Blog.getBlog(blogId)
+    @loginRequired
+    def get(self, blogId = None, userId = None, user_logged_in = None):
+
+        if not user_logged_in:
+            self.redirect("/login")
+
+        blog = Blog.getBlog(int(blogId))
 
         if not blog:
             return self.redirect("/wall")
 
-        userId = self.getLoggedInUser()
-        userObj = User.getUser(userId)
-
-        if not userObj:
-            self.redirect("/login")
-
         checkLike = 0
         checkUser = 0
-        user = None
+        userObj = User.getUser(userId)
+        user = User.by_id(userId)
 
-        if userId:
-            user = User.by_id(userId)
+        if int(userId) in blog.likes:
+            checkLike = 1
 
-            if int(userId) in blog.likes:
-                checkLike = 1
-
-            if blog.created_by.key().id() == user.key().id():
-                checkUser = 1
+        if blog.created_by.key().id() == user.key().id():
+            checkUser = 1
 
         comments = []
 
@@ -169,22 +165,19 @@ class showBlog(BaseHandler):
 #Liking a Blog Entry
 class likeBlog(BaseHandler):
 
-    def post(self):
-        blogId = self.request.get("blogId")
-        blog = Blog.getBlog(blogId)
-        cookie_hash = self.get_cookie_hash("user")
-        user = None
+    @loginRequired
+    def post(self, userId = None, user_logged_in = None):
 
-        if check_cookie_hash(cookie_hash):
-            userId = self.get_user_id(cookie_hash)
-            user = User.by_id(userId)
-
-        if not user:
+        if not user_logged_in:
             msg = "nouser"
             status = "error"
             response = {"status": status, "msg": msg}
             return self.write(json.dumps(response))
 
+        blogId = self.request.get("blogId")
+        blog = Blog.getBlog(blogId)
+
+        user = User.by_id(userId)
         userId = user.key().id()
         blogUserId = blog.created_by.key().id()
         likes_count = len(blog.likes)
@@ -215,7 +208,16 @@ class likeBlog(BaseHandler):
 #Comment on a Blog
 class commentBlog(BaseHandler):
 
-    def post(self):
+    @loginRequired
+    def post(self, userId = None, user_logged_in = None):
+
+        if not user_logged_in:
+            msg = "nouser"
+            status = "error"
+            response = {"status": status, "msg": msg}
+            return self.write(json.dumps(response))
+
+        user = User.by_id(userId)
         status = self.request.get("status")
 
         if status == "updateComment":
@@ -232,23 +234,9 @@ class commentBlog(BaseHandler):
             return self.write(json.dumps(response))
 
         blogId = self.request.get("blogId")
-
         blog = Blog.getBlog(blogId)
-        cookie_hash = self.get_cookie_hash("user")
-        user = None
-
-        if check_cookie_hash(cookie_hash):
-            userId = int(self.get_user_id(cookie_hash))
-            user = User.by_id(userId)
-
-        if not user:
-            msg = "nouser"
-            status = "error"
-            response = {"status": status, "msg": msg}
-            return self.write(json.dumps(response))
 
         if status == "createComment":
-
             content = self.request.get("comment")
             if blog and user:
 
@@ -268,13 +256,12 @@ class commentBlog(BaseHandler):
             return self.write(json.dumps(response))
 
         elif status == "deleteComment":
-
             commentId = int(self.request.get("commentId"))
             if blog and user:
 
                 comment = Comment.getComment(commentId)
 
-                checkUserComment = ((blog.created_by.key().id() == userId) or (comment.created_by.key().id() == userId))
+                checkUserComment = ((blog.created_by.key().id() == int(userId)) or (comment.created_by.key().id() == int(userId)))
 
                 if not checkUserComment:
                     msg = "otheruser"
@@ -294,26 +281,23 @@ class commentBlog(BaseHandler):
 #Deleting a Blog
 class deleteBlog(BaseHandler):
 
-    def post(self):
-        blogId = self.request.get("blogId")
+    @loginRequired
+    def post(self, userId = None, user_logged_in = None):
 
-        blog = Blog.getBlog(blogId)
-        cookie_hash = self.get_cookie_hash("user")
-        user = None
-
-        if check_cookie_hash(cookie_hash):
-            userId = int(self.get_user_id(cookie_hash))
-            user = User.by_id(userId)
-
-        if not user:
+        if not user_logged_in:
             msg = "nouser"
             status = "error"
             response = {"status": status, "msg": msg}
             return self.write(json.dumps(response))
 
+        blogId = self.request.get("blogId")
+
+        blog = Blog.getBlog(blogId)
+        user = User.by_id(userId)
+
         if blog and user:
 
-            if blog.created_by.key().id() != userId:
+            if blog.created_by.key().id() != int(userId):
                 msg = "otheruser"
                 status = "error"
                 response = {"status": status, "msg": msg}

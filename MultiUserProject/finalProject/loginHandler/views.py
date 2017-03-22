@@ -1,5 +1,6 @@
 import hashlib
 import string
+import random
 
 #############Password Hash#############
 
