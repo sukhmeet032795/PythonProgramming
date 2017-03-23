@@ -1,8 +1,8 @@
 import jinja2
 import os
 
-from baseHandler.models import BaseHandler
 from userHandler.models import User
+from baseHandler.views import *
 from google.appengine.ext import db
 
 template_dir = os.path.join(os.path.dirname(__file__), "../templates")

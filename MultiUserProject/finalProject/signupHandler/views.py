@@ -1,5 +1,7 @@
 import re
 
+from signupHandler.models import *
+
 ##########Valid Details Checker############
 
 USER_RE = re.compile(r"^[a-zA-Z]{3,20}$")

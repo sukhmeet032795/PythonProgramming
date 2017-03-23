@@ -1,7 +1,6 @@
 import json
 import webapp2
 from userHandler.models import User
-from baseHandler.models import BaseHandler
 from baseHandler.views import *
 
 #Checking the Presence of User

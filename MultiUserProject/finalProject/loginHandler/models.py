@@ -1,7 +1,7 @@
-from baseHandler.models import BaseHandler
 from userHandler.models import User
 from loginHandler.views import *
 from signupHandler.views import *
+from baseHandler.views import *
 import re
 import hashlib
 import jinja2

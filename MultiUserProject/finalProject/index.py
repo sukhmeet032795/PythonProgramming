@@ -49,23 +49,8 @@ class Home(BaseHandler):
                     checkUser = 1
 
             comments = []
-
             allComments = blog.comments
-            if (len(allComments) != 0):
-                allComments.reverse()
-                for commentId in allComments:
-                    comment = Comment.getComment(commentId)
-                    commentUser = User.by_id(comment.created_by.key().id())
-                    userName = commentUser.firstname + " " + commentUser.lastname
-
-                    userComment = 0
-
-                    if user:
-                        if commentUser.key().id() == user.key().id():
-                            userComment = 1
-
-                    commentObj = { "id" : int(commentId), "content" : comment.content.encode('utf-8') , "name" : userName.encode('utf-8'), "userComment" : int(userComment) }
-                    comments.append(commentObj)
+            comments = commentHelper(allComments, user)
 
             bloguser = User.by_id(blog.created_by.key().id())
             blogUserName = bloguser.firstname + " " + bloguser.lastname
@@ -78,17 +63,16 @@ class Home(BaseHandler):
 
 class UserWall(BaseHandler):
 
-    def get(self):
-        userId = self.getLoggedInUser()
+    @loginRequired
+    def get(self, userId = None, user_logged_in = None):
 
-        userObj = User.getUser(userId)
-        blogObjs = []
-
-        if not userObj:
+        if not user_logged_in:
             return self.redirect("/login")
 
+        userObj = User.getUser(userId)
         user = User.by_id(userId)
         allBlogs = Blog.all().filter("created_by", user.key())
+        blogObjs = []
 
         for blog in allBlogs:
 
@@ -96,23 +80,8 @@ class UserWall(BaseHandler):
             checkUser = 1
 
             comments = []
-
             allComments = blog.comments
-            if (len(allComments) != 0):
-                allComments.reverse()
-                for commentId in allComments:
-                    comment = Comment.getComment(commentId)
-                    commentUser = User.by_id(comment.created_by.key().id())
-                    userName = commentUser.firstname + " " + commentUser.lastname
-
-                    userComment = 0
-
-                    if user:
-                        if commentUser.key().id() == user.key().id():
-                            userComment = 1
-
-                    commentObj = { "id" : int(commentId), "content" : comment.content.encode("utf-8") , "name" : userName.encode("utf-8"), "userComment" : int(userComment) }
-                    comments.append(commentObj)
+            comments = commentHelper(allComments, user)
 
             blogUserName = user.firstname + " " + user.lastname
 
