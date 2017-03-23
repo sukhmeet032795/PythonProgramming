@@ -88,6 +88,10 @@ class editBlog(BaseHandler):
 
         else:
             blog = Blog.getBlog(int(blogId))
+
+            if blog.created_by.key().id() != int(userId):
+                self.redirect("/")
+
             p = { "id" : int(blogId), "title" : blog.title, "subject" : blog.subject, "user" : userObj}
             self.render("newBlog.html", **p)
 
@@ -119,12 +123,9 @@ class editBlog(BaseHandler):
 
             user = User.by_id(int(userId))
 
-            if not blogId:
-                blog = Blog(title = title, subject = subject, created_by = user)
-            else:
-                blog = Blog.getBlog(int(blogId))
-                blog.title = title
-                blog.subject = subject
+            blog = Blog.getBlog(int(blogId))
+            blog.title = title
+            blog.subject = subject
             blog.put()
 
             return self.redirect("/blog/" + str(blog.key().id()))
