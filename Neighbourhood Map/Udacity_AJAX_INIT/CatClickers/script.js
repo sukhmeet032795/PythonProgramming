@@ -51,4 +51,15 @@ $(function(){
         cats[id].clicks += 1;
         $(el.childNodes[1]).html(cats[id].clicks + " Clicks");
     });
+
+    // The application should display
+    //     a list of at least 5 cats, listed by name
+    //     an area to display the selected cat
+
+    // In the cat display area, the following should be displayed
+    //     the cat's name
+    //     a picture of the cat
+    //     text showing the number of clicks
+
+
 })
