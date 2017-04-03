@@ -2,8 +2,34 @@ $(function(){
 
     var model = {
 
-        currentCat = null,
-        cats = []
+        currentCat : null,
+        cats : [
+            {
+                clicks : 0,
+                name : 'Harold',
+                url : 'https://s-media-cache-ak0.pinimg.com/736x/b6/e8/5f/b6e85f2631fd74df894418a7ac51abc3.jpg'
+            },
+            {
+                clicks : 0,
+                name : 'Maple',
+                url : 'https://s-media-cache-ak0.pinimg.com/736x/65/09/0b/65090ba68e4d61f8f203a76a91e6cd29.jpg'
+            },
+            {
+                clicks : 0,
+                name : 'Grumpy Cat',
+                url : 'http://i42.tinypic.com/9qv13l.jpg'
+            },
+            {
+                clicks : 0,
+                name : 'Marie',
+                url : 'https://s-media-cache-ak0.pinimg.com/736x/d8/1f/53/d81f53608e1c359cfd14c770fa502a66.jpg'
+            },
+            {
+                clicks : 0,
+                name : 'Crookshanks',
+                url : 'http://farm3.staticflickr.com/2831/12660151764_c25940554d.jpg'
+            }
+        ]
     };
 
     var octopus = {
@@ -17,17 +43,17 @@ $(function(){
         getCats : function(){
             return model.cats;
         },
-        getCat : function(index){
-            cat = cats[index];
-            view.render(cat);
-        },
-        incrementClicks :  function(index){
-            cat = cats[index];
+        incrementClicks :  function(){
+            cat = model.currentCat;
             cat.clicks += 1
-            view.render(cat);
+            catView.render();
         },
         init : function(){
 
+            model.currentCat = model.cats[0];
+
+            catListView.init();
+            catView.init();
         }
     };
 
@@ -35,28 +61,34 @@ $(function(){
 
         init: function(){
 
-            var catList = [];
-            catList = $("#cat-labels-list");
+            this.catList = [];
+            this.catList = $("#cat-labels-list");
 
-            this.render():
+            this.render();
         },
         render: function(){
 
-            $(catList).html("");
+            $(this.catList).html("");
 
-            var objs = model.cats;
+            var cats = octopus.getCats();
 
-            for(var i = 0; i < objs.length; i++){
+            for(var i = 0; i < cats.length; i++){
 
-                var el = '<li id='+ objs[i].id +'>'+ objs[i].name +'</li>';
+                var cat = cats[i];
 
-                $(el).on("click", function(){
+                el = document.createElement('li'); //create li element
+                el.textContent = cat.name;
 
-                    octopus.setCurrent($(el).attr("id"));
-                    catView.render();
-                });
+                $(el).click((function(cat){
 
-                catList.append(el);
+                    return function(){
+
+                        octopus.setCurrent(cat);
+                        catView.render();
+                    }
+                })(cat));
+
+                this.catList.append(el);
             }
         }
     };
@@ -65,12 +97,12 @@ $(function(){
 
         init: function(){
 
-            var catDisplay = $(".catDisplay");
-            var catName = $("#catName");
-            var catImage = $("#catImage");
-            var displayClicks = $("#displayClicks");
+            this.catDisplay = $(".catDisplay");
+            this.catName = $("#catName");
+            this.catImage = $("#catImage");
+            this.displayClicks = $("#displayClicks");
 
-            $(catImage).on("click", function(){
+            $(this.catImage).on("click", function(){
                 octopus.incrementClicks();
             });
 
@@ -80,9 +112,11 @@ $(function(){
         render: function(){
 
             var currCat = octopus.getCurrent();
-            $(catName).html(currCat.name);
-            $(catImage).attr(src, currCat.url);
-            $(displayClicks).html("The Number of Clicks are: " + currCat.clicks);
+            $(this.catName).html(currCat.name);
+            $(this.catImage).attr("src", currCat.url);
+            $(this.displayClicks).html("The Number of Clicks are: " + currCat.clicks);
         }
     };
+
+    octopus.init();
 });
