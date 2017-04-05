@@ -3,6 +3,7 @@ $(function(){
     var model = {
 
         currentCat : null,
+        showAdmin : false,
         cats : [
             {
                 clicks : 0,
@@ -54,6 +55,36 @@ $(function(){
 
             catListView.init();
             catView.init();
+            adminView.init();
+            adminView.hide();
+        },
+        checkAdminStatus: function(){
+            return model.showAdmin;
+        },
+        adminSave: function(){
+
+            model.getCurrent.name = adminView.name;
+            model.getCurrent.url = adminView.url;
+            model.getCurrent.clicks = parseInt($(adminView.clicks).val());
+            catView.render();
+            catListView.render();
+            adminView.hide();
+        },
+        adminCancel: function(){
+
+            adminView.hide();
+        },
+        adminShow: function(){
+
+            if(model.showAdmin == false){
+
+                model.showAdmin = true;
+                adminView.show();
+            }
+            else if (model.adminShow === true) {
+                model.adminShow = false;
+                adminView.hide();
+            }
         }
     };
 
@@ -117,6 +148,53 @@ $(function(){
             $(this.displayClicks).html("The Number of Clicks are: " + currCat.clicks);
         }
     };
+
+    var adminView = {
+
+        init: function(){
+
+            this.name = $("#cat-name");
+            this.url = $("#cat-url");
+            this.clicks = $("#cat-clicks");
+            this.submit = $("#submit");
+            this.cancel = $("#cancel");
+            this.admin = $("#admin");
+            this.panel = $("#admin-panel");
+
+            $(this.submit).click(function(){
+                octopus.adminSave();
+            });
+
+            $(this.cancel).click(function(){
+                octopus.adminCancel();
+            });
+
+            $(this.admin).click(function(){
+                octopus.adminShow();
+            });
+
+            this.render();
+        },
+
+        render: function(){
+
+            var currentCat = octopus.getCurrent();
+
+            $(this.name).val(currentCat.name);
+            $(this.url).val(currentCat.url);
+            $(this.clicks).val(currentCat.clicks);
+        },
+
+        show: function(){
+
+            $(this.panel).css("display", "block");
+        },
+
+        hide: function(){
+
+            $(this.panel).css("display", "none");
+        }
+    }
 
     octopus.init();
 });
