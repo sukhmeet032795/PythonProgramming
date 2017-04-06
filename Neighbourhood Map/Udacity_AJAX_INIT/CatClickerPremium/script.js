@@ -63,11 +63,12 @@ $(function(){
         },
         adminSave: function(){
 
-            model.getCurrent.name = adminView.name;
-            model.getCurrent.url = adminView.url;
-            model.getCurrent.clicks = parseInt($(adminView.clicks).val());
+            model.currentCat.name = $(adminView.name).val();
+            model.currentCat.url = $(adminView.url).val();
+            model.currentCat.clicks = parseInt($(adminView.clicks).val());
             catView.render();
             catListView.render();
+            model.showAdmin = false;
             adminView.hide();
         },
         adminCancel: function(){
@@ -116,6 +117,7 @@ $(function(){
 
                         octopus.setCurrent(cat);
                         catView.render();
+                        adminView.render();
                     }
                 })(cat));
 
