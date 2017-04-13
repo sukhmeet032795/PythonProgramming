@@ -7,13 +7,13 @@
     <script type='text/javascript' src='index.js'></script>
 </head>
 <body>
-    <div>
-        <h2 data-bind="text: currentCat().name"></h2>
-        <p data-bind="text: currentCat().title"></p>
-        <p data-bind="text: currentCat().clickCount"></p>
-        <img src="" data-bind="attr : {'src' : currentCat().imgSrc, 'alt' : currentCat().imgAttr}, click : $root.incrementCount">
+    <div data-bind="with: currentCat">
+        <h2 data-bind="text: name"></h2>
+        <p data-bind="text: title"></p>
+        <p data-bind="text: clickCount"></p>
+        <img src="" data-bind="attr : {'src' : imgSrc, 'alt' : imgAttr}, click : $parent.incrementCount">
 
-        <ul data-bind="foreach : currentCat().nicknames">
+        <ul data-bind="foreach : nicknames">
             <li data-bind="text: $data"></li>
         </ul>
     </div>
