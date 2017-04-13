@@ -9,7 +9,8 @@
 <body>
 
     <div class="catList">
-        <ul id="catList">
+        <ul id="catList" data-bind = "foreach : cats">
+            <li data-bind="text : name, click : $parent.setCurrentCat"></li>
         </ul>
     </div>
 

@@ -81,24 +81,28 @@ $(document).ready(function() {
 
         self.currentCat = ko.observable( self.cats()[0] );
 
-        var listEl = $("#catList");
+        // var listEl = $("#catList");
 
-        self.cats().forEach(function(cat){
+        // self.cats().forEach(function(cat){
 
-            el = document.createElement('li');
-            el.textContent = cat.name();
+        //     el = document.createElement('li');
+        //     el.textContent = cat.name();
 
-            $(el).click((function(cat){
-                return function(){
-                    self.currentCat(cat);
-                }
-            })(cat));
+        //     $(el).click((function(cat){
+        //         return function(){
+        //             self.currentCat(cat);
+        //         }
+        //     })(cat));
 
-            $(listEl).append(el);
-        });
+        //     $(listEl).append(el);
+        // });
 
         this.incrementCount = function(){
             self.currentCat().clickCount( self.currentCat().clickCount() + 1 );
+        }
+
+        this.setCurrentCat = function(){
+            self.currentCat(this);
         }
     };
 
